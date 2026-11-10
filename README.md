@@ -8,6 +8,7 @@ A beginner notebook of electronics projects, written so a plan is easy to follow
 
 - [Binaural ear-mounted stereo recorder](https://alexmilligan.github.io/hardware-project-ideas/projects/binaural-recorder/) — draft design, unbuilt (hardware and firmware untested)
 - [Social battery patch](https://alexmilligan.github.io/hardware-project-ideas/projects/social-battery-patch/) — idea, unbuilt
+- [Generative mini synth](https://alexmilligan.github.io/hardware-project-ideas/projects/generative-mini-synth/) — idea, unbuilt (not a planned build)
 
 > [!NOTE]
 > Concept images, when a page has one, are AI-generated. They show an idea, not a finished build, and they are not a wiring reference.

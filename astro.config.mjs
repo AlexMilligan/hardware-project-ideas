@@ -36,6 +36,7 @@ export default defineConfig({
 							],
 						},
 						{ slug: 'projects/social-battery-patch' },
+						{ slug: 'projects/generative-mini-synth' },
 					],
 				},
 			],
