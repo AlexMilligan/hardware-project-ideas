@@ -1,0 +1,31 @@
+name: Firmware compile
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  wav-recorder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout your repository using git
+        uses: actions/checkout@v7
+      - name: Install arduino-cli 1.5.1
+        run: |
+          set -euo pipefail
+          curl -fsSL -o /tmp/arduino-cli.tar.gz https://downloads.arduino.cc/arduino-cli/arduino-cli_1.5.1_Linux_64bit.tar.gz
+          sudo tar -C /usr/local/bin -xzf /tmp/arduino-cli.tar.gz arduino-cli
+          arduino-cli version
+      - name: Install Arduino-Pico 6.3.2
+        run: |
+          set -euo pipefail
+          arduino-cli config init
+          arduino-cli config add board_manager.additional_urls https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
+          arduino-cli core update-index
+          arduino-cli core install rp2040:rp2040@6.3.2
+      - name: Compile the WAV recorder
+        run: arduino-cli compile --fqbn rp2040:rp2040:rpipico scripts/binaural-recorder/wav-recorder
