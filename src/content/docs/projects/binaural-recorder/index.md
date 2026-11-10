@@ -72,7 +72,7 @@ Optional. The plan priced these at SparkFun on Oct 30, 2026, for someone who doe
 
 Tools subtotal in the plan: **$97.30**.
 
-Upgrade the plan mentions, instead of the 60 W iron: Pinecil smart iron, SparkFun TOL-23913, $68.50. The plan did not include a URL for it, so this page does not invent one.
+Upgrade the plan mentions, instead of the 60 W iron: Pinecil smart iron, SparkFun [TOL-23913](https://www.sparkfun.com/pinecil-smart-mini-portable-soldering-iron.html). The plan priced it at $68.50 with no URL. The same page listed **$68.50** on Nov 10, 2026.
 
 ## Parts
 
@@ -105,7 +105,16 @@ Every price is US dollars, checked Oct 30, 2026, from the linked page that day. 
 | Heat-shrink kit | Mic pods, strain relief, insulation | 1 | [SparkFun PRT-09353](https://www.sparkfun.com/heat-shrink-kit.html) | $10.95 | Illustrative |
 | Break-away male headers, 40-pin | Modules that arrive without headers | 1 | [SparkFun PRT-00116](https://www.sparkfun.com/break-away-headers-straight.html) | $1.95 | Illustrative |
 
-Estimated parts total in the plan, before shipping and tax: **$158.85**.
+Estimated parts total in the plan, before shipping and tax: **$158.85**. The bias divider and the bypass caps below come out of the resistor and capacitor kits already in that total. They are not a second purchase.
+
+| Part | Purpose | Qty | Example link | Price | Compatibility |
+| --- | --- | --- | --- | --- | --- |
+| 100 kΩ resistor | Bias divider, top and bottom (Ra and Rb) | 2 | Included in the [resistor kit](https://www.sparkfun.com/resistor-kit-1-4w-500-total.html) above | Included in the kit (kit price checked Oct 30, 2026) | Illustrative |
+| 10 μF capacitor | Bypass from the bias node to ground | 1 | Included in the [capacitor kit](https://www.sparkfun.com/sparkfun-capacitor-kit.html) above | Included in the kit (kit price checked Oct 30, 2026) | Illustrative |
+| 0.1 μF capacitor | MCP6022 supply bypass, pin 8 to pin 4 | 1 | Included in the capacitor kit above | Included in the kit (kit price checked Oct 30, 2026) | Illustrative |
+| 0.1 μF and 10 μF | PCM1808 VREF pin bypass to analog ground, only if the module does not already have them | 1 of each | Included in the capacitor kit above | Included in the kit (kit price checked Oct 30, 2026) | Illustrative; module unverified |
+
+Why those divider values, and why they are not the same node as the ADC's VREF pin, is on the [design page](./design-and-wiring/#preamp-parts).
 
 Not in that total:
 
@@ -192,7 +201,7 @@ Confirm the Amazon module's silkscreen against the pin table before you apply po
 
 Build both preamp channels, VREF, and the mic bias, using the [preamp table](./design-and-wiring/#preamp-parts). Solder 30 cm test leads to two mics. The wearable harness comes later.
 
-**Pass (meter, power on, before you connect the ADC):** VREF reads 2.4–2.6 V. Both op-amp outputs (pins 1 and 7) read about 2.5 V. Each mic node reads about 3–3.7 V.
+**Pass (meter, power on, before you connect the ADC):** the bias node reads half of the A5V you just measured. On USB that is about 2.5 V, inside the plan's 2.4–2.6 V window. Both op-amp outputs (pins 1 and 7) read the same voltage as the bias node. Each mic node reads about 3–3.7 V.
 
 **Pass (sound):** a finger snap by the left mic shows a much bigger left level than right, and the reverse for the right mic. Flipping a gain switch raises that channel by about 15.6 dB (×6).
 
@@ -208,8 +217,8 @@ Add the SD breakout. Start and stop with the button. Write a 44-byte WAV header 
 
 **Fail:** clicks or overflows. The plan says to enlarge the RAM buffer, write in 512-byte multiples, pre-allocate the file, or try a different card.
 
-:::note
-The plan does not include a WAV-writer sketch, so this repository does not include one. Steps 5 and 6 are behavior to implement later, not code that works today. The plan's implementation notes (SDFS on SPI0, a 32–64 KB ring buffer, a header rewrite about every 10 seconds, a new file every 30 minutes) are on the [design page](./design-and-wiring/#files-and-storage).
+:::caution[Compiles; untested on hardware]
+`scripts/binaural-recorder/wav-recorder/wav-recorder.ino` is the recorder for this step. It compiled with arduino-cli 1.5.1 and Arduino-Pico 6.3.2. It has not been run on a Pico, an ADC, or a card. It does not start by itself: the GP15 button or serial `r` starts it, and serial `s` stops it. It does not format the card or overwrite an existing `REC` file. The behavior notes are under [Scripts](#scripts).
 :::
 
 ### 6. Battery, harness, and wearing it
@@ -221,7 +230,7 @@ Move the circuit to the Perma-Proto and solder it. Add the PowerBoost, the LiPo,
 **Fail:** whine or hum. The plan says a bigger A5V capacitor, shorter ground wires, or moving the PowerBoost farther from the preamp.
 
 :::note[Battery life is unknown]
-The plan did not estimate runtime. Pico and SD current depend on firmware that has not been written or run. The ADC alone, from its datasheet as the plan quotes it, is 8.6 mA analog plus 5.9 mA digital, typical at 48 kHz. Measure the real runtime in this step. The plan says to read the divider on GP26, multiply by 2, and stop recording cleanly below about 3.4 V, before the PowerBoost's low-battery point (3.2 V).
+The plan did not estimate runtime. The WAV sketch compiles and has not been run, so Pico and SD current are still unknown. The ADC alone, from its datasheet as the plan quotes it, is 8.6 mA analog plus 5.9 mA digital, typical at 48 kHz. Measure the real runtime in this step. The plan says to read the divider on GP26, multiply by 2, and stop recording cleanly below about 3.4 V, before the PowerBoost's low-battery point (3.2 V).
 :::
 
 :::danger
@@ -234,7 +243,7 @@ The iron is about 300–350 °C. Use a stand, ventilate the fumes, wash your han
 
 ## Scripts
 
-These helpers are for the clock and the I²S fragment, so steps 1–6 stay a short list. None of them upload, flash, or overwrite a board. The manual fallback is the Arduino IDE, which is also what the plan tells you to use.
+These helpers keep steps 1–6 short. None of them upload, flash, or overwrite a board or a card. The manual fallback is the Arduino IDE, which is also what the plan tells you to use.
 
 ### `scripts/binaural-recorder/check-setup.sh`
 
@@ -242,7 +251,7 @@ These helpers are for the clock and the I²S fragment, so steps 1–6 stay a sho
 | --- | --- |
 | Status | Print-only. Run once on Linux with no Arduino tools installed. Not run against the Arduino IDE or a Pico. It does not install software or open a port |
 | OS | The plan names none. The script is POSIX `sh` and prints `uname` for whatever machine you are on |
-| Tools | Looks for `arduino` and `arduino-cli` on `PATH` and prints a version only if `arduino-cli` is present. Arduino-Pico's version is not pinned, because the plan did not pin one |
+| Tools | Looks for `arduino` and `arduino-cli` on `PATH` and prints a version only if `arduino-cli` is present. The WAV sketch is pinned to arduino-cli 1.5.1 and Arduino-Pico 6.3.2. This script does not install or compile them |
 | Before it changes anything | It changes nothing. It checks, prints, and exits |
 | Flash / overwrite | There is no upload flag. Extra arguments are refused |
 | Manual fallback | Install the Arduino IDE, add the board URL from the Arduino-Pico README, select "Raspberry Pi Pico", and type or open the sketch yourself |
@@ -268,7 +277,24 @@ void loop() {
 ```
 
 :::caution
-Do not treat this sketch as working. The plan lists it as untested standard SDK calls inside Arduino-Pico.
+Do not treat this sketch as working. The plan lists it as untested standard SDK calls inside Arduino-Pico. The WAV sketch below uses these same three clock lines.
+:::
+
+### `scripts/binaural-recorder/wav-recorder/wav-recorder.ino`
+
+Compiles; untested on hardware. It is the step 5 recorder: I²S slave input, 24-bit stereo, a 44-byte WAV header at 47,991 Hz, SDFS on the plan's SPI pins, start and stop from the button or from serial.
+
+| | |
+| --- | --- |
+| Status | Compiled on Linux with arduino-cli 1.5.1 and Arduino-Pico 6.3.2, board `rp2040:rp2040:rpipico`. Not run on a Pico, a PCM1808, or a microSD card |
+| OS | The plan names none. The compile was on Linux |
+| Tools | arduino-cli 1.5.1. Core `rp2040:rp2040@6.3.2`. I²S and SDFS come with that core. No extra libraries |
+| Before it changes anything | On the Pico it waits. It mounts the card and creates a file only after GP15 is pressed or serial `r` arrives. `setAutoFormat(false)` is set, and `format()` is never called |
+| Flash / overwrite | The file does not upload itself. A new recording uses the next free `REC0001.WAV`–`REC9999.WAV` name. Existing files are left alone |
+| Manual fallback | In the Arduino IDE, install Arduino-Pico 6.3.2 from the core README's board URL, open this sketch, and upload it only when you mean to |
+
+:::caution
+A clean compile is not a working recorder. Step 5's pass line (10 minutes in Audacity, no gaps, 0 overflows) has not been done.
 :::
 
 ### `scripts/binaural-recorder/m3-i2s-fragment.txt`
@@ -293,14 +319,14 @@ If slave input never behaves with this chip, the plan's fallback is the Pico C S
 | --- | --- |
 | Mic max SPL, 110 dB | May distort at the stage. Stand back, test first, and consider a higher-SPL capsule in a later version |
 | 47,991 Hz sample rate | Fine for listening, and for ML if you resample to 48 kHz or 16 kHz in software. Exact 48 kHz would need a 12.288 MHz oscillator on SCKI. That part was not priced |
-| Arduino-Pico I²S slave with the PCM1808 | Docs say slave input is supported. Not seen tested with this chip. Step 3 is the test. The C SDK example is the fallback |
+| Arduino-Pico I²S slave with the PCM1808 | The 6.3.2 core documents slave input, and the WAV sketch compiles against it. Not run with this chip. Step 3 is the test. The C SDK example is the fallback |
 | PCM1808 module details | Pin labels, onboard input caps, MD/FMT jumpers, and the 3.3 V pin are unverified for this Amazon module. Check with a meter and the silkscreen. Trust the TI datasheet's 99 dB typical, not the listing's "105 dB" |
 | Battery runtime | Not estimated. Measure it in step 6 |
-| Prices | Checked Oct 30, 2026. Shipping and tax not included. Amazon third-party prices change often |
+| Prices | The Oct 30, 2026 list still stands, except the Pinecil, which was checked again on Nov 10, 2026 at $68.50. Shipping and tax are not included. Amazon third-party prices change often |
 | Windscreen fit | 0.4 inch muffs on a 9.7 mm capsule plus heat-shrink: unverified |
 | MAX9814 datasheet | The plan could not fetch it (analog.com timed out). That part is not used. The comparison is on the design page, with that limit |
-| VREF divider values | The plan's text says a mid-supply 2.5 V divider shared by both channels. It does not write down the two resistor values. They are not guessed on this site |
-| Op-amp supply pins and its decoupling capacitor | The plan's text assigns op-amp pins 1–3 and 5–7 only. Supply-pin numbers and the decoupling value are not copied here, because they were not in the text |
+| WAV sketch on real hardware | The sketch compiles. Sample count, overflow count, header updates, and SD pauses have not been measured |
+| `millis()` after the clock change | File length uses the sample counter, not `millis()`. Button debounce still uses `millis()`. That timer was not checked after `set_sys_clock_pll` |
 
 ## Next tiny step
 
@@ -308,8 +334,8 @@ Do step 1 only. Install the Arduino IDE, point it at the Arduino-Pico core using
 
 ## Test log
 
-No tests yet. Hardware has not been assembled. The sketches have not been compiled or uploaded for this notebook.
+No hardware tests yet. Nothing has been assembled or uploaded.
 
 | Date | What you tried | Result |
 | --- | --- | --- |
-| | | |
+| Nov 10, 2026 | `arduino-cli` 1.5.1 compiled `wav-recorder.ino` for `rp2040:rp2040:rpipico` with Arduino-Pico 6.3.2, on Linux | Compiles. Not run on hardware |

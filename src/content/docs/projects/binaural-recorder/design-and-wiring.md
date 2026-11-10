@@ -81,22 +81,64 @@ Not measured. Do not treat the ADC's datasheet current as a runtime. Measure a f
 
 ## Preamp parts
 
-Build this twice, left and right. The left channel uses MCP6022 pins 1–3. The right uses pins 5–7. The notch or dot marks pin 1.
+The op-amp is the MCP6022-I/P already in the parts list: an 8-lead PDIP, so it fits the breadboard. Table 3-1 of [Microchip DS20001685F](https://ww1.microchip.com/downloads/aemDocuments/documents/MSLD/ProductDocuments/DataSheets/MCP6021-Data-Sheet-DS20001685.pdf) gives the same pin numbers for PDIP, SOIC, and TSSOP. The notch or dot marks pin 1.
 
-| Part | Value | Job, as the plan states it |
+| Pin | Name | This circuit |
 | --- | --- | --- |
-| R1 + C1 | 1 kΩ + 100 μF | Cleans the supply that feeds the mic. One filter per channel |
-| R2 | 2.2 kΩ | Mic bias. The mic's datasheet is specified with a 2.2 kΩ load. The mic sees about 3.4 V, inside its 1–10 V range |
-| C2 | 10 μF, + toward the mic | Passes audio and blocks the mic's DC |
-| R3 | 100 kΩ | Holds the op-amp input at VREF (2.5 V, mid-supply) so audio can swing both ways |
-| Rf, Rg, Rh, Cg | 10 kΩ, 10 kΩ, 1 kΩ, 100 μF | Gain is 1 + Rf/Rg = 2 with the switch open. Switch closed, Rg in parallel with Rh is about 909 Ω, so 1 + 10 kΩ/909 Ω is about 12. Cg keeps DC gain at 1 |
-| Cf | 100 pF | Rolls off far-ultrasonic gain (about 160 kHz) for stability |
-| C3, R4, C4 | 10 μF, 100 Ω, 10 nF | DC block and anti-alias into the ADC, in the range the plan says the PCM1808 datasheet suggests (100 Ω / 0.01 μF) |
+| 1 | VOUTA | Left preamp output |
+| 2 | VINA− | Left inverting input (gain network) |
+| 3 | VINA+ | Left non-inverting input, biased through R3 |
+| 4 | VSS | Analog ground |
+| 5 | VINB+ | Right non-inverting input, biased through its own R3 |
+| 6 | VINB− | Right inverting input (gain network) |
+| 7 | VOUTB | Right preamp output |
+| 8 | VDD | A5V |
 
-One VREF divider is shared by both channels. The plan's figure shows it, and shows op-amp supply decoupling. The written part list does not give the divider's two resistor values, or that decoupling capacitor's value. Those values are an open question on the [project page](../#open-questions-and-risks). Do not invent them from a typical schematic.
+The MCP6022 has no VREF pin. Microchip's mid-supply pin is only on the MCP6021 and MCP6023 (Table 3-1 and section 4.6). Figure 4-8 draws that internal reference as 50 kΩ from VDD to the pin and 50 kΩ from the pin to VSS.
+
+Build the signal parts twice, left and right. One bias divider is shared.
+
+| Part | Value | Job |
+| --- | --- | --- |
+| R1 + C1 | 1 kΩ + 100 μF | Cleans the supply that feeds the mic. One filter per channel. From the plan |
+| R2 | 2.2 kΩ | Mic bias. The mic datasheet is specified with a 2.2 kΩ load. The plan says the mic sees about 3.4 V, inside its 1–10 V range |
+| C2 | 10 μF, + toward the mic | Passes audio and blocks the mic's DC. From the plan |
+| Ra, Rb | 100 kΩ, 100 kΩ | Shared bias divider from A5V to ground. The midpoint is the bias node |
+| Cb | 10 μF | From the bias node to ground |
+| R3 | 100 kΩ, one per channel | From the bias node to the + input. From the plan |
+| Rf, Rg, Rh, Cg | 10 kΩ, 10 kΩ, 1 kΩ, 100 μF | Gain is 1 + Rf/Rg = 2 with the switch open. Switch closed, Rg in parallel with Rh is about 909 Ω, so 1 + 10 kΩ/909 Ω is about 12. Cg keeps DC gain at 1. From the plan |
+| Cf | 100 pF | Rolls off far-ultrasonic gain (about 160 kHz) for stability. From the plan |
+| C3, R4, C4 | 10 μF, 100 Ω, 10 nF | DC block and anti-alias into the ADC. From the plan |
+| Cvd | 0.1 μF | From MCP6022 pin 8 to pin 4 |
+
+### Why 100 kΩ and 10 μF
+
+The kit has 100 kΩ and 10 kΩ. It does not have 50 kΩ, so this divider cannot copy Figure 4-8 exactly.
+
+Two 100 kΩ resistors draw 25 μA at 5.0 V and 26 μA at 5.2 V (`V / 200 kΩ`). Microchip's on-chip 50 kΩ + 50 kΩ divider draws 50 μA at 5 V. Two 10 kΩ resistors would draw 250 μA. The ADC's analog supply is already 8.6 mA typical, so 25 μA is the smaller of the kit choices.
+
+The divider's Thevenin resistance is 50 kΩ. At 25 °C its open-circuit noise density is about 29 nV/√Hz (`sqrt(4kT × 50 kΩ)`), above the op-amp's 8.7 nV/√Hz at 10 kHz (DS20001685F). The 10 μF cap across the bottom resistor puts the pole at about 0.32 Hz (`1 / (2π × 50 kΩ × 10 μF)`). From 20 Hz up, that cap is under 800 Ω, and the noise of 800 Ω is about 3.6 nV/√Hz, under the op-amp. R3 is 100 kΩ, about 41 nV/√Hz, and was already in the plan. The cap does not change that.
+
+Input bias current is 1 pA typical at 25 °C, and 150 pA maximum at 85 °C for the industrial part (DS20001685F). 150 pA through 50 kΩ is 7.5 μV, and through R3 is 15 μV. That does not move a bias of about 2.5 V.
+
+DC gain is 1 because of Cg, so each output sits at the bias-node voltage. C2 keeps mic DC off the + input, so the only DC load on the divider is the bias current, not R3 as a resistor to ground.
+
+### How that meets the PCM1808
+
+PCM1808 electrical characteristics, typical, at VCC = 5 V: input voltage 0.6 × VCC (3 Vp-p), center voltage 0.5 × VCC, input impedance 60 kΩ. Recommended VCC is 4.5 V to 5.5 V, so the PowerBoost's 5.2 V output is inside that range. The features list states a 3 Vp-p single-ended input.
+
+The ADC's center is its own reference. Chip pin 1 is named VREF and the pin table calls it "reference-voltage decoupling (= 0.5 VCC)". TI's typical application (figure 26, note 3) bypasses that pin with 0.1 μF ceramic and 10 μF electrolytic. TI says that applications section is not part of the component specification. The center voltage itself is in the electrical characteristics. Do not drive the pin, and do not tie it to the op-amp bias node. The two midpoints are both half of their own supply. They are not the same wire.
+
+C3 is the plan's 10 μF series capacitor into the 60 kΩ input. That high-pass is about 0.27 Hz (`1 / (2π × 60 kΩ × 10 μF)`). TI's typical circuit uses 1 μF and calls the corner 2.7 Hz. Either cap removes the op-amp's DC. The PCM1808 also has a digital high-pass, 0.91 Hz at 48 kHz. The signal the ADC converts is centered on 0.5 × VCC by the ADC, not by our divider.
+
+A 3 Vp-p sine around 2.5 V uses 1.0 V to 4.0 V. Section 4.2 says the output can reach within 20 mV of either rail with a 10 kΩ load. The ADC load is lighter than that (100 Ω in series with 60 kΩ). The 3 Vp-p swing fits. At 5.2 V the typical full-scale is 0.6 × 5.2 V = 3.12 Vp-p around 2.6 V, which still fits. A5V is the filtered rail, not a guaranteed 5.00 V, so measure it. The bias node should be half of that reading. The plan's 2.4–2.6 V pass window matches a supply of about 5 V.
 
 :::caution
-The plan's text does not number the op-amp supply pins. Read them on the MCP6022 datasheet (the plan cites Microchip document 20001685E) before you connect power. Electrolytic capacitors are marked with a stripe on the minus side. C2's plus end points at the mic.
+Electrolytic capacitors are marked with a stripe on the minus side. C2's plus end points at the mic. Cb's plus end points at the bias node if you use an electrolytic. On a breadboard the 0.1 μF from pin 8 to pin 4 cannot meet the datasheet's "within 2 mm" rule (section 4.7). Put it on the socket pins anyway. The A5V 1000 μF is the shared bulk capacitor (1 μF or larger, within 100 mm) from that same section. Keep it on the same board.
+:::
+
+:::caution[Two different midpoints]
+The op-amp bias node and the PCM1808 VREF pin are both about half the analog supply. Connect them together and you are driving a pin the datasheet uses for decoupling. Leave the ADC pin on its own caps. The Amazon module's silkscreen is still unverified, so find VREF with the module in front of you before you add those caps.
 :::
 
 ## Pin table
@@ -113,7 +155,12 @@ Physical pin numbers are the ones in parentheses in the plan (GP10 is Pico pin 1
 | PCM1808 FMT (may be labeled FMY) | GND | Format = I²S | |
 | PCM1808 +5V | A5V | Analog supply | 4.5–5.5 V allowed |
 | PCM1808 3.3 | Pico 3V3 OUT (pin 36) | Digital supply | 2.7–3.6 V allowed |
-| Preamp OUT_L / OUT_R | PCM1808 VINL / VINR | Analog audio | If the module already has input capacitors, keep C3 anyway. The plan says that is harmless |
+| A5V | 100 kΩ Ra, then the bias node, then 100 kΩ Rb, to GND | Op-amp bias | Midpoint is half of A5V. One divider for both channels |
+| Bias node | 10 μF to GND | Bias bypass | Pole about 0.32 Hz. See the preamp section |
+| Bias node | R3, 100 kΩ, to MCP6022 pins 3 and 5 | + input bias | One R3 per channel. From the plan |
+| MCP6022 pin 8 | A5V | VDD | Pin 4 (VSS) to GND. 0.1 μF from pin 8 to pin 4 |
+| MCP6022 pin 1 / pin 7 | PCM1808 VINL / VINR | Analog audio | Through C3, R4, and C4. If the module already has input capacitors, keep C3 anyway. The plan says that is harmless |
+| PCM1808 VREF (chip pin 1) | 0.1 μF and 10 μF to analog ground | ADC reference decoupling | Do not connect this pin to the op-amp bias node. Skip the caps if the module already has them |
 | Jack tip / ring / sleeve | Preamp MIC_L / MIC_R / GND | Mic signals | Tip = L, ring = R, sleeve = both grounds and both shields. Shields are grounded at the plug end only |
 | microSD CLK / SI / SO / CS | GP18 (pin 24) / GP19 (pin 25) / GP16 (pin 21) / GP17 (pin 22) | SPI0 | SD 3V from Pico 3V3 OUT. GND to GND |
 | Record button | GP15 (pin 20) and GND | Start / stop | Internal pull-up. Debounce in firmware |
@@ -132,7 +179,7 @@ Check this table against your module with a meter before you power it. The names
 
 24-bit stereo at 47,991 Hz is about 288 KB/s, or about 1.04 GB per hour, so a 32 GB card holds about 30 hours. FAT32 limits a file to 4 GB, so the plan starts a new file every 30 minutes. SD cards sometimes pause while writing, which is why audio is buffered in RAM.
 
-The plan's notes for the recorder that does not exist yet: use Arduino-Pico's SDFS (based on SdFat 2), which its docs recommend over the old SD library, on SPI0 (GP16, GP17, GP18, GP19). Use a ring buffer of 32–64 KB. Update the WAV header about every 10 seconds so a dead battery still leaves a playable file. Optional: core 1 reads I²S while core 0 writes the card.
+`wav-recorder.ino` follows those notes and compiles. It is untested on hardware. It uses SDFS (the core's SdFat 2 wrapper; the docs prefer it to the old SD library) on SPI0: MISO GP16, CS GP17, SCK GP18, MOSI GP19. The I²S DMA buffer is `setBuffers(32, 256)`, which is 32 KB, the low end of the plan's 32–64 KB. The header is rewritten every 10 seconds of samples, and a new file starts every 30 minutes of samples. The optional split, core 1 reading I²S while core 0 writes the card, is not in this sketch.
 
 ## Wearing the mics
 
@@ -172,8 +219,8 @@ Datasheets and guides named in the plan:
 - [RP2040](https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf)
 - [Raspberry Pi Pico](https://datasheets.raspberrypi.com/pico/pico-datasheet.pdf)
 - [PowerBoost 1000C guide](https://learn.adafruit.com/adafruit-powerboost-1000c-load-share-usb-charge-boost)
-- PUI AOM-5024L-HD-R datasheet: the plan's `api.puiaudio.com` link was truncated. [PUI's product page](https://puiaudio.com/product/microphones/aom-5024l-hd-r) is the manufacturer page, not that datasheet URL.
-- MCP6022: the plan cites `ww1.microchip.com/…/20001685E.pdf` (path truncated). Document 20001685E.
+- [PUI AOM-5024L-HD-R datasheet](https://api.puiaudio.com/filename/AOM-5024L-HD-R.pdf). Checked Nov 10, 2026: the URL returns a PDF (`%PDF-1.7`).
+- [MCP6021/1R/2/3/4 datasheet, DS20001685F](https://ww1.microchip.com/downloads/aemDocuments/documents/MSLD/ProductDocuments/DataSheets/MCP6021-Data-Sheet-DS20001685.pdf). Checked Nov 10, 2026. The plan's older file, [20001685E](https://ww1.microchip.com/downloads/en/devicedoc/20001685e.pdf), also still downloads. Pin numbers on this page are from revision F.
 
 Firmware and libraries named in the plan:
 

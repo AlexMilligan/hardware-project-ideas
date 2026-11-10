@@ -1,12 +1,11 @@
 #!/bin/sh
 # Binaural recorder — prerequisite check only.
 #
-# Status: print-only. Run once on Linux with no Arduino tools installed.
-#         Not run against the Arduino IDE or a Pico.
-#         This script does not upload, flash, erase, or overwrite anything.
+# Status: print-only. Not run against the Arduino IDE or a Pico.
+#         This script does not compile, upload, flash, erase, or overwrite anything.
 # OS: the Oct 30, 2026 plan names none. This file is POSIX sh.
-# Tools: Arduino IDE and the Arduino-Pico core (Earle Philhower).
-#        No tool version is pinned, because the plan did not pin one.
+# Tools: Arduino IDE, or arduino-cli 1.5.1 with Arduino-Pico 6.3.2
+#        for wav-recorder.ino. This script does not install that core.
 # License: The Unlicense. See the repository UNLICENSE file.
 #
 # Manual fallback (no script required):
@@ -18,11 +17,14 @@
 #      print hello once a second. The plan did not paste that sketch.
 #   5. For the clock, open m2-adc-clock.ino and upload it yourself,
 #      only when you mean to. The sketch is untested.
+#   6. For WAV files, open wav-recorder/wav-recorder.ino. It compiles
+#      and is untested on hardware. Upload it only when you mean to.
 
-echo "Status: untested prerequisite check."
-echo "This script will not install software, write a sketch, or upload to a board."
+echo "Status: print-only prerequisite check."
+echo "This script will not install software, compile a sketch, or upload to a board."
 echo "OS seen right now: $(uname -s) $(uname -r)"
-echo "The plan does not require this OS, and it pins no tool version."
+echo "The plan does not require this OS."
+echo "WAV sketch pin: arduino-cli 1.5.1, Arduino-Pico core 6.3.2, board rp2040:rp2040:rpipico."
 
 if command -v arduino-cli >/dev/null 2>&1; then
   echo "arduino-cli is on PATH. Reported version:"
@@ -43,6 +45,8 @@ echo "  scripts/binaural-recorder/m2-adc-clock/m2-adc-clock.ino"
 echo "    untested clock sketch copied from the plan"
 echo "  scripts/binaural-recorder/m3-i2s-fragment.txt"
 echo "    untested and incomplete. Not an Arduino sketch, so it cannot be uploaded as one."
+echo "  scripts/binaural-recorder/wav-recorder/wav-recorder.ino"
+echo "    compiles; untested on hardware. This script will not compile or upload it."
 
 echo
 echo "Manual fallback:"
@@ -52,6 +56,8 @@ echo "     https://github.com/earlephilhower/arduino-pico"
 echo "  3. Select \"Raspberry Pi Pico\"."
 echo "  4. Milestone 1: IDE Blink example, plus a line that prints hello once a second."
 echo "  5. Milestone 2: open m2-adc-clock.ino and upload it only when you mean to."
+echo "  6. WAV files: open wav-recorder/wav-recorder.ino."
+echo "     Install Arduino-Pico 6.3.2, then upload only when you mean to."
 
 if [ "$#" -gt 0 ]; then
   echo
