@@ -1,0 +1,23 @@
+STATUS: untested and incomplete.
+Copied from the binaural recorder plan dated Oct 30, 2026.
+These lines are not a full sketch. They will not record audio.
+This file is .txt on purpose, so the Arduino IDE will not upload it as a sketch.
+
+OS: not specified in the plan.
+Tools: Arduino IDE + Arduino-Pico core (Earle Philhower). No versions pinned.
+Nothing in this repository uploads this file.
+
+Manual fallback: after the M2 clock code is running, add these calls in the
+Arduino IDE yourself. If slave reads stay at zero or look shifted, the plan
+says to try setBitsPerSample(32) with read32() and shift right by 8, and
+otherwise to switch to the C SDK fallback named on the project page.
+
+License: The Unlicense. See the repository UNLICENSE file.
+
+#include <I2S.h>
+I2S i2s(INPUT);
+// in setup(), after the M2 clock code:
+i2s.setSlave(); i2s.setDATA(10); // GP10=DIN, GP11=BCLK, GP12=LRCLK
+i2s.setBitsPerSample(24); i2s.setBuffers(16, 256);
+i2s.begin(47991);
+// in loop(): int32_t l, r; i2s.read24(&l, &r); -> track peaks, count samples/second

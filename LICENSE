@@ -1,0 +1,31 @@
+# License
+
+Two public-domain dedications cover this repository. They do not cover the same files.
+
+## Docs, text, and original diagrams — CC0-1.0
+
+Prose and original diagrams are dedicated under Creative Commons CC0 1.0 Universal. The full legal code is in [LICENSE-CC0](LICENSE-CC0).
+
+That includes:
+
+- the Starlight pages in `src/content/docs/`
+- `README.md`, `CONTRIBUTING.md`, and this scope note
+- original diagrams, including `public/favicon.svg`
+
+## Code and scripts — The Unlicense
+
+Program source, scripts, and workflow files are dedicated under the Unlicense. The full text is in [UNLICENSE](UNLICENSE).
+
+That includes:
+
+- `scripts/`
+- site program files such as `astro.config.mjs`
+- `.github/workflows/`
+
+## Not covered
+
+Third-party product images, logos, and screenshots are not covered by either dedication. Do not add them unless you have rights that allow it.
+
+AI-generated images carry no ownership guarantees. A generated picture is not proof that anyone owns it, and it is not a wiring reference.
+
+The Starlight and Astro packages this site builds with stay under their own upstream licenses. They are dependencies, not part of these dedications.
