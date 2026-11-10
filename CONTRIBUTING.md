@@ -24,9 +24,12 @@ A helper script checks its prerequisites before it changes anything. It never fl
 
 ## Build locally
 
-Node is pinned to 22.23.4 (see [`.node-version`](.node-version)). From a checkout:
+Node is pinned to 22.23.4 (see [`.node-version`](.node-version)). The write-ups live in `src/content/docs/`. From a checkout:
 
 ```sh
 npm ci
+npm run dev
 npm run build
 ```
+
+`npm run dev` previews the site on your machine. `npm run build` checks that the static site builds.

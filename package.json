@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "private": true,
   "description": "Beginner hardware project ideas, published with Astro Starlight.",
+  "homepage": "https://alexmilligan.github.io/hardware-project-ideas/",
   "engines": {
     "node": "22.23.4"
   },
