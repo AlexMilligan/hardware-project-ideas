@@ -6,6 +6,12 @@ import starlight from '@astrojs/starlight';
 export default defineConfig({
 	site: 'https://alexmilligan.github.io',
 	base: '/hardware-project-ideas',
+	// GitHub Pages for this repo publishes the main branch folder /docs.
+	outDir: 'docs',
+	trailingSlash: 'always',
+	build: {
+		format: 'directory',
+	},
 	integrations: [
 		starlight({
 			title: 'Hardware Project Ideas',

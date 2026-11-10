@@ -1,0 +1,605 @@
+<!DOCTYPE html><html lang="en" dir="ltr" data-theme="dark" data-has-toc data-has-sidebar class="astro-g5ptsecz"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Binaural ear-mounted stereo recorder | Hardware Project Ideas</title><link rel="canonical" href="https://alexmilligan.github.io/hardware-project-ideas/projects/binaural-recorder/"/><link rel="sitemap" href="/hardware-project-ideas/sitemap-index.xml"/><link rel="shortcut icon" href="/hardware-project-ideas/favicon.svg" type="image/svg+xml"/><meta name="generator" content="Astro v7.4.8"/><meta name="generator" content="Starlight v0.42.10"/><meta property="og:title" content="Binaural ear-mounted stereo recorder"/><meta property="og:type" content="article"/><meta property="og:url" content="https://alexmilligan.github.io/hardware-project-ideas/projects/binaural-recorder/"/><meta property="og:locale" content="en"/><meta property="og:description" content="Draft design for two ear mics and a pocket WAV recorder. Not built. Hardware and firmware untested."/><meta property="og:site_name" content="Hardware Project Ideas"/><meta name="twitter:card" content="summary_large_image"/><meta name="description" content="Draft design for two ear mics and a pocket WAV recorder. Not built. Hardware and firmware untested."/><script>
+	window.StarlightThemeProvider = (() => {
+		const storedTheme =
+			typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme');
+		const theme =
+			storedTheme ||
+			(window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+		document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
+		return {
+			updatePickers(theme = storedTheme || 'auto') {
+				document.querySelectorAll('starlight-theme-select').forEach((picker) => {
+					const select = picker.querySelector('select');
+					if (select) select.value = theme;
+					/** @type {HTMLTemplateElement | null} */
+					const tmpl = document.querySelector(`#theme-icons`);
+					const newIcon = tmpl && tmpl.content.querySelector('.' + theme);
+					if (newIcon) {
+						const oldIcon = picker.querySelector('svg.label-icon');
+						if (oldIcon) {
+							oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes);
+						}
+					}
+				});
+			},
+		};
+	})();
+</script><template id="theme-icons"><svg aria-hidden="true" class="light astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M5 12a1 1 0 0 0-1-1H3a1 1 0 0 0 0 2h1a1 1 0 0 0 1-1Zm.64 5-.71.71a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l.71-.71A1 1 0 0 0 5.64 17ZM12 5a1 1 0 0 0 1-1V3a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm5.66 2.34a1 1 0 0 0 .7-.29l.71-.71a1 1 0 1 0-1.41-1.41l-.66.71a1 1 0 0 0 0 1.41 1 1 0 0 0 .66.29Zm-12-.29a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.71-.71a1.004 1.004 0 1 0-1.43 1.41l.73.71ZM21 11h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm-2.64 6A1 1 0 0 0 17 18.36l.71.71a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.76-.66ZM12 6.5a5.5 5.5 0 1 0 5.5 5.5A5.51 5.51 0 0 0 12 6.5Zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm0 3.5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Z"/></svg><svg aria-hidden="true" class="dark astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.64 13a1 1 0 0 0-1.05-.14 8.049 8.049 0 0 1-3.37.73 8.15 8.15 0 0 1-8.14-8.1 8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36a10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05Zm-9.5 6.69A8.14 8.14 0 0 1 7.08 5.22v.27a10.15 10.15 0 0 0 10.14 10.14 9.784 9.784 0 0 0 2.1-.22 8.11 8.11 0 0 1-7.18 4.32v-.04Z"/></svg><svg aria-hidden="true" class="auto astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg></template><link rel="stylesheet" href="/hardware-project-ideas/_astro/print.C9eyqPGL.css" media="print"><link rel="stylesheet" href="/hardware-project-ideas/_astro/common.CT12JHjB.css"><script type="module" src="/hardware-project-ideas/_astro/page.cNngjUgL.js"></script></head><body class="astro-g5ptsecz"><a class="sl-skip-link astro-qb7clj6f" href="#_top">Skip to content</a><div class="page sl-flex astro-yntsjkba"><header class="header astro-yntsjkba"><div class="header astro-by6fddyj"><div class="title-wrapper sl-flex astro-by6fddyj"><a href="/hardware-project-ideas/" class="site-title sl-flex astro-6rvad3va"><span class="astro-6rvad3va" translate="no">Hardware Project Ideas</span></a></div><div class="sl-flex print:hidden astro-by6fddyj"><site-search class="astro-by6fddyj astro-b5kgnn7o" data-translations="{&quot;placeholder&quot;:&quot;Search&quot;}"><button data-open-modal disabled aria-label="Search" aria-keyshortcuts="Control+K" class="astro-b5kgnn7o"><svg aria-hidden="true" class="astro-b5kgnn7o astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.71 20.29 18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z"/></svg><span class="sl-hidden md:sl-block astro-b5kgnn7o" aria-hidden="true">Search</span><kbd class="sl-hidden md:sl-flex astro-b5kgnn7o" style="display: none"><kbd class="astro-b5kgnn7o">Ctrl</kbd><kbd class="astro-b5kgnn7o">K</kbd></kbd></button><dialog style="padding: 0" aria-label="Search" class="astro-b5kgnn7o"><div class="dialog-frame sl-flex astro-b5kgnn7o"><button data-close-modal class="sl-flex md:sl-hidden astro-b5kgnn7o">Cancel</button><div class="search-container astro-b5kgnn7o"><div id="starlight__search" class="astro-b5kgnn7o"></div></div></div></dialog></site-search><script>
+	(() => {
+		const openBtn = document.querySelector('button[data-open-modal]');
+		const shortcut = openBtn?.querySelector('kbd');
+		if (!openBtn || !(shortcut instanceof HTMLElement)) return;
+		const platformKey = shortcut.querySelector('kbd');
+		if (platformKey && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
+			platformKey.textContent = '⌘';
+			openBtn.setAttribute('aria-keyshortcuts', 'Meta+K');
+		}
+		shortcut.style.display = '';
+	})();
+</script><script type="module" src="/hardware-project-ideas/_astro/Search.astro_astro_type_script_index_0_lang.BsQTTaI4.js"></script></div><div class="sl-hidden md:sl-flex print:hidden right-group astro-by6fddyj"><div class="sl-flex social-icons astro-by6fddyj"><a href="https://github.com/AlexMilligan/hardware-project-ideas" rel="me" class="sl-flex astro-n2mnl6yq"><span class="sr-only astro-n2mnl6yq">GitHub</span><svg aria-hidden="true" class="astro-n2mnl6yq astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a></div><starlight-theme-select><label style="--sl-select-width: 6.25em" class="astro-2z5xp7gb"><span class="sr-only astro-2z5xp7gb">Select theme</span><svg aria-hidden="true" class="icon label-icon astro-2z5xp7gb astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg><select autocomplete="off" class="astro-2z5xp7gb"><option value="dark" class="astro-2z5xp7gb">Dark</option><option value="light" class="astro-2z5xp7gb">Light</option><option value="auto" selected class="astro-2z5xp7gb">Auto</option></select><svg aria-hidden="true" class="icon caret astro-2z5xp7gb astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg></label></starlight-theme-select><script>
+	StarlightThemeProvider.updatePickers();
+</script><script type="module">var e=`starlight-theme`,t=e=>e===`auto`||e===`dark`||e===`light`?e:`auto`,n=()=>t(typeof localStorage<`u`&&localStorage.getItem(e));function r(t){typeof localStorage<`u`&&localStorage.setItem(e,t===`light`||t===`dark`?t:``)}var i=()=>matchMedia(`(prefers-color-scheme: light)`).matches?`light`:`dark`;function a(e){StarlightThemeProvider.updatePickers(e),document.documentElement.dataset.theme=e===`auto`?i():e,r(e)}matchMedia(`(prefers-color-scheme: light)`).addEventListener(`change`,()=>{n()===`auto`&&a(`auto`)});var o=class extends HTMLElement{constructor(){super(),a(n()),this.querySelector(`select`)?.addEventListener(`change`,e=>{e.currentTarget instanceof HTMLSelectElement&&a(t(e.currentTarget.value))})}};customElements.define(`starlight-theme-select`,o);</script><script type="module">var e=class extends HTMLElement{constructor(){super();let e=this.querySelector(`select`);e&&(e.addEventListener(`change`,e=>{e.currentTarget instanceof HTMLSelectElement&&(window.location.pathname=e.currentTarget.value)}),window.addEventListener(`pageshow`,t=>{if(!t.persisted)return;let n=e.querySelector(`option[selected]`)?.index;n!==e.selectedIndex&&(e.selectedIndex=n??0)}))}};customElements.define(`starlight-lang-select`,e);</script></div></div></header><nav class="sidebar print:hidden astro-yntsjkba" aria-label="Main"><button popovertarget="starlight__sidebar" class="sl-menu-button sl-flex md:sl-hidden print:hidden astro-r2osgdlg"><svg aria-hidden="true" class="open-menu astro-r2osgdlg astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M3 8h18a1 1 0 1 0 0-2H3a1 1 0 0 0 0 2Zm18 8H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Zm0-5H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Z"/></svg><svg aria-hidden="true" class="close-menu astro-r2osgdlg astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="m13.41 12 6.3-6.29a1.004 1.004 0 1 0-1.42-1.42L12 10.59l-6.29-6.3a1.004 1.004 0 0 0-1.42 1.42l6.3 6.29-6.3 6.29a1 1 0 0 0 0 1.42.998.998 0 0 0 1.42 0l6.29-6.3 6.29 6.3a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.42L13.41 12Z"/></svg><span class="sr-only astro-r2osgdlg">Menu</span></button><script type="module">var e=class extends HTMLElement{constructor(){super();let e=matchMedia(`(min-width: 50em)`),t=()=>{this.popover=e.matches?null:`auto`};t(),e.addEventListener(`change`,()=>t()),this.addEventListener(`toggle`,({newState:e})=>this.trapFocus(e===`open`))}trapFocus(e){document.querySelectorAll(`.main-frame, .sl-skip-link`).forEach(t=>{t.toggleAttribute(`inert`,e)})}};customElements.define(`sl-sidebar-pane`,e);</script><sl-sidebar-pane popover id="starlight__sidebar" class="sidebar-pane astro-yntsjkba"><div class="sidebar-content sl-flex astro-yntsjkba"><sl-sidebar-state-persist data-hash="0w1roi3" class="astro-ipdry5cl"><script aria-hidden="true">
+		(() => {
+			try {
+				if (!matchMedia('(min-width: 50em)').matches) return;
+				/** @type {HTMLElement | null} */
+				const target = document.querySelector('sl-sidebar-state-persist');
+				const state = JSON.parse(sessionStorage.getItem('sl-sidebar-state') || '0');
+				if (!target || !state || target.dataset.hash !== state.hash) return;
+				window._starlightScrollRestore = state.scroll;
+				customElements.define(
+					'sl-sidebar-restore',
+					class SidebarRestore extends HTMLElement {
+						connectedCallback() {
+							try {
+								const idx = parseInt(this.dataset.index || '');
+								const details = this.closest('details');
+								if (details && typeof state.open[idx] === 'boolean') details.open = state.open[idx];
+							} catch {}
+						}
+					}
+				);
+			} catch {}
+		})();
+	</script><ul class="top-level astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/hardware-project-ideas/" class="large astro-rmhv4bp6"><span class="astro-rmhv4bp6">Start here</span></a></li><li class="astro-rmhv4bp6"><details open class="astro-rmhv4bp6"><summary class="astro-rmhv4bp6"><span class="group-label astro-rmhv4bp6"><span class="large astro-rmhv4bp6">Projects</span></span><svg aria-hidden="true" class="caret astro-rmhv4bp6 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="0"></sl-sidebar-restore><ul class="astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/hardware-project-ideas/projects/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">All projects</span></a></li><li class="astro-rmhv4bp6"><a href="/hardware-project-ideas/projects/template/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Project template</span><span class="sl-badge tip small  astro-rmhv4bp6 astro-f4zorn72">Template</span></a></li><li class="astro-rmhv4bp6"><details open class="astro-rmhv4bp6"><summary class="astro-rmhv4bp6"><span class="group-label astro-rmhv4bp6"><span class="large astro-rmhv4bp6">Binaural recorder</span></span><svg aria-hidden="true" class="caret astro-rmhv4bp6 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="1"></sl-sidebar-restore><ul class="astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/hardware-project-ideas/projects/binaural-recorder/" aria-current="page" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Overview</span><span class="sl-badge caution small  astro-rmhv4bp6 astro-f4zorn72">Draft design</span></a></li><li class="astro-rmhv4bp6"><a href="/hardware-project-ideas/projects/binaural-recorder/design-and-wiring/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Design and wiring</span><span class="sl-badge caution small  astro-rmhv4bp6 astro-f4zorn72">Unverified</span></a></li></ul></details></li><li class="astro-rmhv4bp6"><a href="/hardware-project-ideas/projects/social-battery-patch/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Social battery patch</span><span class="sl-badge note small  astro-rmhv4bp6 astro-f4zorn72">Idea</span></a></li></ul></details></li></ul><script aria-hidden="true">
+		(() => {
+			const scroller = document.getElementById('starlight__sidebar');
+			if (!window._starlightScrollRestore || !scroller) return;
+			scroller.scrollTop = window._starlightScrollRestore;
+			delete window._starlightScrollRestore;
+		})();
+	</script></sl-sidebar-state-persist><div class="md:sl-hidden"><div class="mobile-preferences sl-flex astro-p4azlveh"><div class="social-icons astro-p4azlveh"><a href="https://github.com/AlexMilligan/hardware-project-ideas" rel="me" class="sl-flex astro-n2mnl6yq"><span class="sr-only astro-n2mnl6yq">GitHub</span><svg aria-hidden="true" class="astro-n2mnl6yq astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a></div><starlight-theme-select><label style="--sl-select-width: 6.25em" class="astro-2z5xp7gb"><span class="sr-only astro-2z5xp7gb">Select theme</span><svg aria-hidden="true" class="icon label-icon astro-2z5xp7gb astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg><select autocomplete="off" class="astro-2z5xp7gb"><option value="dark" class="astro-2z5xp7gb">Dark</option><option value="light" class="astro-2z5xp7gb">Light</option><option value="auto" selected class="astro-2z5xp7gb">Auto</option></select><svg aria-hidden="true" class="icon caret astro-2z5xp7gb astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg></label></starlight-theme-select><script>
+	StarlightThemeProvider.updatePickers();
+</script></div></div></div></sl-sidebar-pane></nav><div class="main-frame astro-yntsjkba"><script type="module">var e=document.getElementById(`starlight__sidebar`),t=e?.querySelector(`sl-sidebar-state-persist`),n=`sl-sidebar-state`,r=()=>{let r=[],i=t?.dataset.hash||``;try{let e=sessionStorage.getItem(n),t=JSON.parse(e||`{}`);Array.isArray(t.open)&&t.hash===i&&(r=t.open)}catch{}return{hash:i,open:r,scroll:e?.scrollTop||0}},i=e=>{try{sessionStorage.setItem(n,JSON.stringify(e))}catch{}},a=()=>i(r()),o=(e,t)=>{let n=r();n.open[t]=e,i(n)};t?.addEventListener(`click`,e=>{if(!(e.target instanceof Element))return;let t=e.target.closest(`summary`)?.closest(`details`);if(!t)return;let n=t.querySelector(`sl-sidebar-restore`),r=parseInt(n?.dataset.index||``);isNaN(r)||o(!t.open,r)}),addEventListener(`visibilitychange`,()=>{document.visibilityState===`hidden`&&a()});</script><div class="lg:sl-flex astro-lrzkfocr"><aside class="right-sidebar-container print:hidden astro-lrzkfocr"><div class="right-sidebar astro-lrzkfocr"><div class="lg:sl-hidden astro-qok35upx"><mobile-starlight-toc data-min-h="2" data-max-h="3" class="astro-66cqc7ze"><nav aria-labelledby="starlight__on-this-page--mobile" class="astro-66cqc7ze"><details id="starlight__mobile-toc" class="astro-66cqc7ze"><summary id="starlight__on-this-page--mobile" class="sl-flex astro-66cqc7ze"><span class="toggle sl-flex astro-66cqc7ze">On this page<svg aria-hidden="true" class="caret astro-66cqc7ze astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></span><span class="display-current astro-66cqc7ze"></span></summary><div class="dropdown astro-66cqc7ze"><ul class="isMobile astro-jugkfwgx" style="--depth: 0;"><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#_top" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Overview</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#status" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Status</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#concept-image" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Concept image</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#why" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Why</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#tools" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Tools</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#parts" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Parts</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#build-steps" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Build steps</span></a><ul class="isMobile astro-jugkfwgx" style="--depth: 1;"><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#1-tools-and-hello-pico" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">1. Tools and hello Pico</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#2-make-the-adc-clock" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">2. Make the ADC clock</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#3-adc-talks-to-the-pico-no-mics-yet" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">3. ADC talks to the Pico, no mics yet</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#4-preamp-and-mics-on-the-breadboard" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">4. Preamp and mics on the breadboard</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#5-record-wav-files-to-microsd" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">5. Record WAV files to microSD</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#6-battery-harness-and-wearing-it" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">6. Battery, harness, and wearing it</span></a></li></ul></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#scripts" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Scripts</span></a><ul class="isMobile astro-jugkfwgx" style="--depth: 1;"><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#scriptsbinaural-recordercheck-setupsh" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">scripts/binaural-recorder/check-setup.sh</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#scriptsbinaural-recorderm2-adc-clockm2-adc-clockino" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">scripts/binaural-recorder/m2-adc-clock/m2-adc-clock.ino</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#scriptsbinaural-recorderwav-recorderwav-recorderino" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">scripts/binaural-recorder/wav-recorder/wav-recorder.ino</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#scriptsbinaural-recorderm3-i2s-fragmenttxt" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">scripts/binaural-recorder/m3-i2s-fragment.txt</span></a></li></ul></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#open-questions-and-risks" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Open questions and risks</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#next-tiny-step" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Next tiny step</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#test-log" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Test log</span></a></li></ul></div></details></nav></mobile-starlight-toc><script type="module" src="/hardware-project-ideas/_astro/MobileTableOfContents.astro_astro_type_script_index_0_lang.C3fM4Kra.js"></script></div><div class="right-sidebar-panel sl-hidden lg:sl-block astro-qok35upx"><div class="sl-container astro-qok35upx"><starlight-toc data-min-h="2" data-max-h="3"><nav aria-labelledby="starlight__on-this-page"><h2 id="starlight__on-this-page">On this page</h2><ul class="astro-jugkfwgx" style="--depth: 0;"><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#_top" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Overview</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#status" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Status</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#concept-image" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Concept image</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#why" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Why</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#tools" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Tools</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#parts" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Parts</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#build-steps" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Build steps</span></a><ul class="astro-jugkfwgx" style="--depth: 1;"><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#1-tools-and-hello-pico" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">1. Tools and hello Pico</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#2-make-the-adc-clock" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">2. Make the ADC clock</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#3-adc-talks-to-the-pico-no-mics-yet" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">3. ADC talks to the Pico, no mics yet</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#4-preamp-and-mics-on-the-breadboard" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">4. Preamp and mics on the breadboard</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#5-record-wav-files-to-microsd" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">5. Record WAV files to microSD</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#6-battery-harness-and-wearing-it" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">6. Battery, harness, and wearing it</span></a></li></ul></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#scripts" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Scripts</span></a><ul class="astro-jugkfwgx" style="--depth: 1;"><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#scriptsbinaural-recordercheck-setupsh" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">scripts/binaural-recorder/check-setup.sh</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#scriptsbinaural-recorderm2-adc-clockm2-adc-clockino" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">scripts/binaural-recorder/m2-adc-clock/m2-adc-clock.ino</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#scriptsbinaural-recorderwav-recorderwav-recorderino" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">scripts/binaural-recorder/wav-recorder/wav-recorder.ino</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#scriptsbinaural-recorderm3-i2s-fragmenttxt" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">scripts/binaural-recorder/m3-i2s-fragment.txt</span></a></li></ul></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#open-questions-and-risks" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Open questions and risks</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#next-tiny-step" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Next tiny step</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#test-log" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Test log</span></a></li></ul></nav></starlight-toc><script type="module" src="/hardware-project-ideas/_astro/TableOfContents.astro_astro_type_script_index_0_lang.BpJaGz7G.js"></script></div></div></div></aside><div class="main-pane astro-lrzkfocr"><main data-pagefind-body class="astro-g5ptsecz" lang="en" dir="ltr"><div class="content-panel astro-a7po4psb"><div class="sl-container astro-a7po4psb"><h1 id="_top" class="astro-bebwqqxs">Binaural ear-mounted stereo recorder</h1></div></div><div class="content-panel astro-a7po4psb"><div class="sl-container astro-a7po4psb"><div class="sl-markdown-content"><p>Two tiny microphones at the entrances of your ear canals, and a pocket recorder that writes a stereo file of what those ears heard.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="status">Status</h2><a class="sl-anchor-link" href="#status"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Status”</span></a></div>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Status</td>
+<td>draft design</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>unbuilt; hardware untested; firmware untested</td>
+</tr>
+</tbody>
+</table>
+<p>This page condenses a design plan dated Oct 30, 2026. Prices on this page were checked that day. Nothing in the plan was built, ordered, or run. The <a href="./design-and-wiring/">design and wiring</a> page holds the pin table, the preamp values, and the power rule. The six steps below are the plan’s milestones, shortened.</p>
+<aside aria-label="Note" class="starlight-aside starlight-aside--note"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path d="M12 11a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0v-4a1 1 0 0 0-1-1Zm.38-3.92a1 1 0 0 0-.76 0 1 1 0 0 0-.33.21 1.15 1.15 0 0 0-.21.33 1 1 0 0 0 .21 1.09c.097.088.209.16.33.21A1 1 0 0 0 13 8a1.05 1.05 0 0 0-.29-.71 1 1 0 0 0-.33-.21ZM12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 18a8 8 0 1 1 0-16.001A8 8 0 0 1 12 20Z"/></svg>Note</p><div class="starlight-aside__content"><p>Specs below come from the manufacturers’ datasheets cited on the design page, as the plan recorded them. Anything the plan could not verify is marked unverified here too.</p></div></aside>
+<div class="sl-heading-wrapper level-h2"><h2 id="concept-image">Concept image</h2><a class="sl-anchor-link" href="#concept-image"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Concept image”</span></a></div>
+<p>No image yet. The plan’s block diagrams are not reproduced on this site.</p>
+<p>If you add a generated picture, caption it exactly:</p>
+<blockquote>
+<p>AI-generated concept — not built; not a wiring reference</p>
+</blockquote>
+<div class="sl-heading-wrapper level-h2"><h2 id="why">Why</h2><a class="sl-anchor-link" href="#why"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Why”</span></a></div>
+<p>Played back on headphones, the recording should sound like the listener is standing where you stood. Mics at your ears pick up the three clues your brain already uses: a sound arrives at the near ear first, your head quiets and dulls the far ear, and the shape of your outer ear changes the tone a little depending on direction. You do not add EQ. On speakers the effect is weaker, because both ears hear both speakers.</p>
+<p>Each mic gets an MCP6022 op-amp preamp with a switch. LOW gain is ×2 (+6 dB), for loud music. HIGH gain is ×12 (+21.6 dB), for ambient sound and speech. A PCM1808 24-bit stereo ADC sends I²S to a Raspberry Pi Pico. The Pico makes the ADC’s master clock, listens as an I²S slave, and writes 24-bit WAV files to a microSD card. A LiPo and an Adafruit PowerBoost 1000C supply power. The analog parts get an extra RC filter on their 5 V supply so the booster’s switching noise stays out of the audio. The plan’s estimated parts total is about $158.85 before shipping and tax. Basic tools, if you need them, add about $97.30.</p>
+<p>The plan also keeps the raw file if you later high-pass filter rumble (it suggests around 80 Hz as an example, in firmware or in an editor). A later “bunny ears” hat, with the mics spaced apart, is a different technique. It is a wide stereo pair, not this head-shaped effect. The same electronics can feed either one.</p>
+<aside aria-label="About 110 dB SPL" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>About 110 dB SPL</p><div class="starlight-aside__content"><p>The AOM-5024L is rated to about 110 dB SPL (THD under 3%). Right next to a PA or a drum kit the sound can be louder than that, and the mic itself distorts no matter which gain you pick. Stand back from the stacks, and listen to a test recording on headphones before the set.</p></div></aside>
+<aside aria-label="47,991 Hz" class="starlight-aside starlight-aside--note"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path d="M12 11a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0v-4a1 1 0 0 0-1-1Zm.38-3.92a1 1 0 0 0-.76 0 1 1 0 0 0-.33.21 1.15 1.15 0 0 0-.21.33 1 1 0 0 0 .21 1.09c.097.088.209.16.33.21A1 1 0 0 0 13 8a1.05 1.05 0 0 0-.29-.71 1 1 0 0 0-.33-.21ZM12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 18a8 8 0 1 1 0-16.001A8 8 0 0 1 12 20Z"/></svg>47,991 Hz</p><div class="starlight-aside__content"><p>The sample rate is 47,991 Hz, not 48,000 Hz. The plan calls that inaudible (about 0.02% slow, −186 ppm). Write <code dir="auto">47991</code> into the WAV header so playback speed is exact. The reason for the odd rate is on the <a href="./design-and-wiring/#clock">design page</a>.</p></div></aside>
+<aside aria-label="Not legal advice. Recording laws vary." class="starlight-aside starlight-aside--note"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path d="M12 11a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0v-4a1 1 0 0 0-1-1Zm.38-3.92a1 1 0 0 0-.76 0 1 1 0 0 0-.33.21 1.15 1.15 0 0 0-.21.33 1 1 0 0 0 .21 1.09c.097.088.209.16.33.21A1 1 0 0 0 13 8a1.05 1.05 0 0 0-.29-.71 1 1 0 0 0-.33-.21ZM12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 18a8 8 0 1 1 0-16.001A8 8 0 0 1 12 20Z"/></svg>Not legal advice. Recording laws vary.</p><div class="starlight-aside__content"><p>The plan’s legal note is written for Texas. Texas is a one-party consent state (Penal Code §16.02): you may record a conversation you are part of. Do not record conversations you are not part of. Do not leave the recorder running in a room you have left.</p><p>Texas Business &amp; Commerce Code §503.001 treats a voiceprint as a biometric identifier. Capturing one for a commercial purpose means telling the person and getting consent, then protecting the data and deleting it within a set time. The Attorney General enforces it, with penalties up to $25,000 per violation. The plan says personal hobby use is mainly outside that focus, and that a voice-ID use which becomes commercial needs consent from the people you enroll.</p><p>Recording a performance also involves the artist’s rights and the venue’s rules, even with a media pass. Get the band’s OK before you share recordings.</p><p>Statute links and the Attorney General page are on the <a href="./design-and-wiring/#sources">design page</a>.</p></div></aside>
+<div class="sl-heading-wrapper level-h2"><h2 id="tools">Tools</h2><a class="sl-anchor-link" href="#tools"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Tools”</span></a></div>
+<p>Optional. The plan priced these at SparkFun on Oct 30, 2026, for someone who does not already own them. Shipping and tax are not included. Tools are not in the $158.85 parts total.</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Purpose</th>
+<th>Price</th>
+<th>Link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Soldering iron, 60 W adjustable (TOL-14456)</td>
+<td>Headers, mic joints, the final board</td>
+<td>$25.95</td>
+<td><a href="https://www.sparkfun.com/soldering-iron-60w-adjustable-temperature.html">SparkFun</a></td>
+</tr>
+<tr>
+<td>Lead-free solder, 100 g (TOL-09325)</td>
+<td>Those joints</td>
+<td>$24.95</td>
+<td><a href="https://www.sparkfun.com/solder-lead-free-100-gram-spool.html">SparkFun</a></td>
+</tr>
+<tr>
+<td>Digital multimeter, basic (TOL-12966)</td>
+<td>The pass/fail voltage checks</td>
+<td>$21.50</td>
+<td><a href="https://www.sparkfun.com/digital-multimeter-basic.html">SparkFun</a></td>
+</tr>
+<tr>
+<td>Soldering stand with brass sponge (TOL-24061)</td>
+<td>Park the iron</td>
+<td>$13.95</td>
+<td><a href="https://www.sparkfun.com/soldering-stand-with-brass-sponge.html">SparkFun</a></td>
+</tr>
+<tr>
+<td>Solder wick (TOL-29531)</td>
+<td>Lift a bad joint</td>
+<td>$10.95</td>
+<td><a href="https://www.sparkfun.com/solder-wick-2-5ft-techspray.html">SparkFun</a></td>
+</tr>
+</tbody>
+</table>
+<p>Tools subtotal in the plan: <strong>$97.30</strong>.</p>
+<p>Upgrade the plan mentions, instead of the 60 W iron: Pinecil smart iron, SparkFun <a href="https://www.sparkfun.com/pinecil-smart-mini-portable-soldering-iron.html">TOL-23913</a>. The plan priced it at $68.50 with no URL. The same page listed <strong>$68.50</strong> on Nov 10, 2026.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="parts">Parts</h2><a class="sl-anchor-link" href="#parts"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Parts”</span></a></div>
+<p>Every price is US dollars, checked Oct 30, 2026, from the linked page that day. Shipping and tax are not included. Ordering from five sellers (Newark, Amazon, SparkFun, Adafruit, Performance Audio) adds several shipping charges. Newark pages in the plan loaded in a browser but blocked command-line checkers.</p>
+<p><strong>Compatibility:</strong> verified-compatible is not used on this page. Nothing has been bench-tested. A row can still be the plan’s chosen part and stay illustrative until a check passes.</p>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Purpose</th>
+<th>Qty</th>
+<th>Example link</th>
+<th>Price</th>
+<th>Compatibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PUI AOM-5024L-HD-R electret mic</td>
+<td>Ear mics</td>
+<td>2</td>
+<td><a href="https://www.newark.com/pui-audio/aom-5024l-hd-r/microphone-ecm-omnidirectional/dp/02AM8398">Newark 02AM8398</a></td>
+<td>$4.49 each ($8.98)</td>
+<td>Illustrative</td>
+</tr>
+<tr>
+<td>PCM1808 ADC module</td>
+<td>Stereo 24-bit ADC</td>
+<td>1</td>
+<td><a href="https://www.amazon.com/dp/B0D9LNGBD1">Amazon B0D9LNGBD1</a> (GODIYMODULES)</td>
+<td>$6.99</td>
+<td>Illustrative; pinout unverified</td>
+</tr>
+<tr>
+<td>Raspberry Pi Pico H (with headers)</td>
+<td>Controller and clock source</td>
+<td>1</td>
+<td><a href="https://www.sparkfun.com/raspberry-pi-pico-h.html">SparkFun DEV-20172</a></td>
+<td>$5.50</td>
+<td>Illustrative</td>
+</tr>
+<tr>
+<td>MCP6022-I/P dual op-amp (DIP-8)</td>
+<td>Preamp, both channels</td>
+<td>1</td>
+<td><a href="https://www.newark.com/microchip/mcp6022-i-p/ic-op-amp-10mhz-7v-us-dip-8/dp/96K3737">Newark 96K3737</a></td>
+<td>$1.86</td>
+<td>Illustrative</td>
+</tr>
+<tr>
+<td>8-pin DIP socket</td>
+<td>Lets you swap the op-amp</td>
+<td>1</td>
+<td><a href="https://www.sparkfun.com/dip-sockets-solder-tail-8-pin.html">SparkFun PRT-07937</a></td>
+<td>$0.60</td>
+<td>Illustrative</td>
+</tr>
+<tr>
+<td>microSD breakout</td>
+<td>Storage interface</td>
+<td>1</td>
+<td><a href="https://www.adafruit.com/product/4682">Adafruit 4682</a></td>
+<td>$3.50</td>
+<td>Illustrative</td>
+</tr>
+<tr>
+<td>SanDisk Ultra 32 GB microSD</td>
+<td>Storage (about 30 hours)</td>
+<td>1</td>
+<td><a href="https://www.amazon.com/dp/B08GY9NYRM">Amazon B08GY9NYRM</a></td>
+<td>$21.33</td>
+<td>Illustrative</td>
+</tr>
+<tr>
+<td>PowerBoost 1000C</td>
+<td>LiPo charger and 5.2 V boost</td>
+<td>1</td>
+<td><a href="https://www.adafruit.com/product/2465">Adafruit 2465</a></td>
+<td>$19.95</td>
+<td>Illustrative</td>
+</tr>
+<tr>
+<td>LiPo 3.7 V 2000 mAh (protected)</td>
+<td>Battery</td>
+<td>1</td>
+<td><a href="https://www.adafruit.com/product/2011">Adafruit 2011</a></td>
+<td>$12.50</td>
+<td>Illustrative</td>
+</tr>
+<tr>
+<td>Resistor kit, 500 pcs (COM-10969)</td>
+<td>All resistors (10 Ω, 47 Ω, 100 Ω, 1 kΩ, 2.2 kΩ, 10 kΩ, 100 kΩ)</td>
+<td>1</td>
+<td><a href="https://www.sparkfun.com/resistor-kit-1-4w-500-total.html">SparkFun</a></td>
+<td>$9.95</td>
+<td>Illustrative</td>
+</tr>
+<tr>
+<td>Capacitor kit (KIT-13698)</td>
+<td>All caps (100 pF, 10 nF, 0.1 μF, 10 μF, 100 μF, 1000 μF)</td>
+<td>1</td>
+<td><a href="https://www.sparkfun.com/sparkfun-capacitor-kit.html">SparkFun</a></td>
+<td>$11.50</td>
+<td>Illustrative</td>
+</tr>
+<tr>
+<td>SPDT slide switch</td>
+<td>Gain L, gain R, and power</td>
+<td>3</td>
+<td><a href="https://www.adafruit.com/product/805">Adafruit 805</a></td>
+<td>$0.95 each ($2.85)</td>
+<td>Illustrative</td>
+</tr>
+<tr>
+<td>Tactile buttons, 20-pack</td>
+<td>Record button</td>
+<td>1</td>
+<td><a href="https://www.adafruit.com/product/367">Adafruit 367</a></td>
+<td>$2.50</td>
+<td>Illustrative</td>
+</tr>
+<tr>
+<td>3.5 mm stereo jack, breadboard-friendly</td>
+<td>Mic harness socket</td>
+<td>1</td>
+<td><a href="https://www.adafruit.com/product/1699">Adafruit 1699</a></td>
+<td>$0.95</td>
+<td>Illustrative</td>
+</tr>
+<tr>
+<td>3.5 mm TRS plug</td>
+<td>End of the mic harness</td>
+<td>1</td>
+<td><a href="https://www.sparkfun.com/audio-plug-3-5mm.html">SparkFun COM-11143</a></td>
+<td>$0.75</td>
+<td>Illustrative</td>
+</tr>
+<tr>
+<td>Mogami W2697 shielded cable</td>
+<td>Mic cables, 2.5 mm outside diameter</td>
+<td>10 ft</td>
+<td><a href="https://www.performanceaudio.com/products/mogami-w2697-miniature-balanced-mic-cable-by-the-foot">Performance Audio</a></td>
+<td>$0.39/ft ($3.90)</td>
+<td>Illustrative</td>
+</tr>
+<tr>
+<td>Furry windscreens, 0.4 inch, 5-pack</td>
+<td>Wind protection</td>
+<td>1</td>
+<td><a href="https://www.amazon.com/dp/B08DJ2L8N1">Amazon B08DJ2L8N1</a> (BornFeel)</td>
+<td>$9.99</td>
+<td>Illustrative; fit unverified</td>
+</tr>
+<tr>
+<td>Full-size breadboard</td>
+<td>Prototyping for steps 2–5</td>
+<td>1</td>
+<td><a href="https://www.adafruit.com/product/239">Adafruit 239</a></td>
+<td>$5.95</td>
+<td>Illustrative</td>
+</tr>
+<tr>
+<td>Jumper wires, male-to-male, 20 × 6 inch</td>
+<td>Breadboard wiring</td>
+<td>2</td>
+<td><a href="https://www.adafruit.com/product/1957">Adafruit 1957</a></td>
+<td>$1.95 each ($3.90)</td>
+<td>Illustrative</td>
+</tr>
+<tr>
+<td>Perma-Proto half-size, 3-pack</td>
+<td>Final soldered build (step 6)</td>
+<td>1</td>
+<td><a href="https://www.adafruit.com/product/571">Adafruit 571</a></td>
+<td>$12.50</td>
+<td>Illustrative</td>
+</tr>
+<tr>
+<td>Heat-shrink kit</td>
+<td>Mic pods, strain relief, insulation</td>
+<td>1</td>
+<td><a href="https://www.sparkfun.com/heat-shrink-kit.html">SparkFun PRT-09353</a></td>
+<td>$10.95</td>
+<td>Illustrative</td>
+</tr>
+<tr>
+<td>Break-away male headers, 40-pin</td>
+<td>Modules that arrive without headers</td>
+<td>1</td>
+<td><a href="https://www.sparkfun.com/break-away-headers-straight.html">SparkFun PRT-00116</a></td>
+<td>$1.95</td>
+<td>Illustrative</td>
+</tr>
+</tbody>
+</table>
+<p>Estimated parts total in the plan, before shipping and tax: <strong>$158.85</strong>. The bias divider and the bypass caps below come out of the resistor and capacitor kits already in that total. They are not a second purchase.</p>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Purpose</th>
+<th>Qty</th>
+<th>Example link</th>
+<th>Price</th>
+<th>Compatibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100 kΩ resistor</td>
+<td>Bias divider, top and bottom (Ra and Rb)</td>
+<td>2</td>
+<td>Included in the <a href="https://www.sparkfun.com/resistor-kit-1-4w-500-total.html">resistor kit</a> above</td>
+<td>Included in the kit (kit price checked Oct 30, 2026)</td>
+<td>Illustrative</td>
+</tr>
+<tr>
+<td>10 μF capacitor</td>
+<td>Bypass from the bias node to ground</td>
+<td>1</td>
+<td>Included in the <a href="https://www.sparkfun.com/sparkfun-capacitor-kit.html">capacitor kit</a> above</td>
+<td>Included in the kit (kit price checked Oct 30, 2026)</td>
+<td>Illustrative</td>
+</tr>
+<tr>
+<td>0.1 μF capacitor</td>
+<td>MCP6022 supply bypass, pin 8 to pin 4</td>
+<td>1</td>
+<td>Included in the capacitor kit above</td>
+<td>Included in the kit (kit price checked Oct 30, 2026)</td>
+<td>Illustrative</td>
+</tr>
+<tr>
+<td>0.1 μF and 10 μF</td>
+<td>PCM1808 VREF pin bypass to analog ground, only if the module does not already have them</td>
+<td>1 of each</td>
+<td>Included in the capacitor kit above</td>
+<td>Included in the kit (kit price checked Oct 30, 2026)</td>
+<td>Illustrative; module unverified</td>
+</tr>
+</tbody>
+</table>
+<p>Why those divider values, and why they are not the same node as the ADC’s VREF pin, is on the <a href="./design-and-wiring/#preamp-parts">design page</a>.</p>
+<p>Not in that total:</p>
+<ul>
+<li>The headband or cap. Use one you have. Not priced.</li>
+<li>Optional foam windscreens. The plan’s Amazon pages were blocked by a captcha, so they were not priced.</li>
+<li>An enclosure. Not priced.</li>
+<li>Optional JST-PH extension, <a href="https://www.adafruit.com/product/1131">Adafruit 1131</a>, $1.95.</li>
+</ul>
+<p>Other price notes from that day:</p>
+<ul>
+<li>The mic’s DigiKey price showed about $4.58 in a search result. That page was blocked to the plan’s checker, so it is not linked here.</li>
+<li>The resistor-kit page showed both “in stock” and “backorder”.</li>
+<li>The microSD price used is $21.33 from the Amazon seller “LET’S BUY”. An Amazon-shipped offer the same day was $26.99.</li>
+<li>The PCM1808 listing claims “105 dB”. The TI datasheet says 99 dB typical. Trust the datasheet.</li>
+<li>Whether the 0.4 inch windscreens fit a 9.7 mm capsule plus heat-shrink is unverified. The plan says a small rubber band or a dab of fabric glue can hold them.</li>
+</ul>
+<aside aria-label="Unverified PCM1808 module" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>Unverified PCM1808 module</p><div class="starlight-aside__content"><p>The Amazon module’s pin labels, onboard input caps, MD/FMT jumpers, and whether the 3.3 V pin powers VDD directly were not verified for this listing. Signal names in the pin table come from a published wiring example (<a href="https://github.com/VVatashi/Pico-I2S">VVatashi/Pico-I2S</a>). Check your board with a meter and read the silkscreen before you power it.</p></div></aside>
+<aside aria-label="LiPo batteries" class="starlight-aside starlight-aside--danger"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path d="M12 7a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V8a1 1 0 0 0-1-1Zm0 8a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm9.71-7.44-5.27-5.27a1.05 1.05 0 0 0-.71-.29H8.27a1.05 1.05 0 0 0-.71.29L2.29 7.56a1.05 1.05 0 0 0-.29.71v7.46c.004.265.107.518.29.71l5.27 5.27c.192.183.445.286.71.29h7.46a1.05 1.05 0 0 0 .71-.29l5.27-5.27a1.05 1.05 0 0 0 .29-.71V8.27a1.05 1.05 0 0 0-.29-.71ZM20 15.31 15.31 20H8.69L4 15.31V8.69L8.69 4h6.62L20 8.69v6.62Z"/></svg>LiPo batteries</p><div class="starlight-aside__content"><p>A LiPo can catch fire if it is punctured, crushed, shorted, or over-charged. The plan says Adafruit’s packs include a protection circuit (it cuts out at 3.0 V and on an output short). Treat the cell with care anyway.</p><p>Charge only with the PowerBoost or another proper LiPo charger, on a non-flammable surface, and not unattended or overnight at first. Never charge a puffy or damaged battery. Take it to a battery recycling drop-off.</p><p>Do not let the red and black wires touch. Cover exposed metal with heat-shrink, and check the JST polarity before you plug in. Adafruit-to-Adafruit matches.</p><p>On your body, keep the battery in a pocket or pouch. Not against your skin, not under a tight headband, and not in a hot car.</p><p>This design stays at 5.2 V or below. Do not connect any part of it to mains power. Unplug power before you change wiring.</p></div></aside>
+<div class="sl-heading-wrapper level-h2"><h2 id="build-steps">Build steps</h2><a class="sl-anchor-link" href="#build-steps"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Build steps”</span></a></div>
+<p>Six milestones. Do them in order. The pass line is the plan’s test, not a result anyone has recorded.</p>
+<aside aria-label="Tip" class="starlight-aside starlight-aside--tip"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path fill-rule="evenodd" d="M1.44 8.855v-.001l3.527-3.516c.34-.344.802-.541 1.285-.548h6.649l.947-.947c3.07-3.07 6.207-3.072 7.62-2.868a1.821 1.821 0 0 1 1.557 1.557c.204 1.413.203 4.55-2.868 7.62l-.946.946v6.649a1.845 1.845 0 0 1-.549 1.286l-3.516 3.528a1.844 1.844 0 0 1-3.11-.944l-.858-4.275-4.52-4.52-2.31-.463-1.964-.394A1.847 1.847 0 0 1 .98 10.693a1.843 1.843 0 0 1 .46-1.838Zm5.379 2.017-3.873-.776L6.32 6.733h4.638l-4.14 4.14Zm8.403-5.655c2.459-2.46 4.856-2.463 5.89-2.33.134 1.035.13 3.432-2.329 5.891l-6.71 6.71-3.561-3.56 6.71-6.711Zm-1.318 15.837-.776-3.873 4.14-4.14v4.639l-3.364 3.374Z" clip-rule="evenodd"/><path d="M9.318 18.345a.972.972 0 0 0-1.86-.561c-.482 1.435-1.687 2.204-2.934 2.619a8.22 8.22 0 0 1-1.23.302c.062-.365.157-.79.303-1.229.415-1.247 1.184-2.452 2.62-2.935a.971.971 0 1 0-.62-1.842c-.12.04-.236.084-.35.13-2.02.828-3.012 2.588-3.493 4.033a10.383 10.383 0 0 0-.51 2.845l-.001.016v.063c0 .536.434.972.97.972H2.24a7.21 7.21 0 0 0 .878-.065c.527-.063 1.248-.19 2.02-.447 1.445-.48 3.205-1.472 4.033-3.494a5.828 5.828 0 0 0 .147-.407Z"/></svg>Tip</p><div class="starlight-aside__content"><p>If a test fails, the problem is somewhere in the last thing you changed.</p></div></aside>
+<div class="sl-heading-wrapper level-h3"><h3 id="1-tools-and-hello-pico">1. Tools and hello Pico</h3><a class="sl-anchor-link" href="#1-tools-and-hello-pico"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “1. Tools and hello Pico”</span></a></div>
+<p>Install the Arduino IDE. Add the Arduino-Pico board URL from that core’s README (<a href="https://github.com/earlephilhower/arduino-pico">earlephilhower/arduino-pico</a>). Select “Raspberry Pi Pico”. Upload a Blink sketch that also prints <code dir="auto">hello</code> every second. No wiring and no soldering.</p>
+<p><strong>Pass:</strong> the onboard LED (GP25) blinks once per second, and <code dir="auto">hello</code> scrolls in the Serial Monitor.</p>
+<p><strong>Fail:</strong> no COM port. Hold BOOTSEL while you plug in, then upload again.</p>
+<aside aria-label="Caution" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>Caution</p><div class="starlight-aside__content"><p>The plan describes that sketch. It does not paste one. Use the Arduino IDE Blink example and add a line that prints <code dir="auto">hello</code> once a second. This notebook has not run it.</p></div></aside>
+<div class="sl-heading-wrapper level-h3"><h3 id="2-make-the-adc-clock">2. Make the ADC clock</h3><a class="sl-anchor-link" href="#2-make-the-adc-clock"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “2. Make the ADC clock”</span></a></div>
+<p>Set the system clock to 110.571 MHz and put a divided-by-9 clock on GP21. The calls are in <a href="https://github.com/AlexMilligan/hardware-project-ideas/blob/main/scripts/binaural-recorder/m2-adc-clock/m2-adc-clock.ino"><code dir="auto">scripts/binaural-recorder/m2-adc-clock/m2-adc-clock.ino</code></a> and again under <a href="#scripts">Scripts</a>. They are untested.</p>
+<p><strong>Pass:</strong> Serial shows about 110571428. A multimeter on DC volts at GP21 reads roughly half of 3.3 V (about 1.5–1.8 V), which means the pin is toggling fast.</p>
+<p><strong>Fail:</strong> 0 V or 3.3 V means there is no clock. Check the pin number and the code.</p>
+<aside aria-label="Untested clock sketch" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>Untested clock sketch</p><div class="starlight-aside__content"><p>These are Pico SDK calls the plan expects to find inside Arduino-Pico. Nobody has run them for this notebook. The plan says to run them before USB-dependent features if Serial misbehaves, and that changing <code dir="auto">clk_sys</code> also changes SPI clock math (SdFat handles that).</p></div></aside>
+<div class="sl-heading-wrapper level-h3"><h3 id="3-adc-talks-to-the-pico-no-mics-yet">3. ADC talks to the Pico, no mics yet</h3><a class="sl-anchor-link" href="#3-adc-talks-to-the-pico-no-mics-yet"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “3. ADC talks to the Pico, no mics yet”</span></a></div>
+<p>Solder headers onto the PCM1808 module if it needs them. This is the plan’s first soldering; the <a href="./design-and-wiring/#soldering">soldering notes</a> are the reference. Wire the module from the <a href="./design-and-wiring/#pin-table">pin table</a>. Take A5V from the Pico’s VBUS through the 10 Ω and 1000 μF filter described on that page. Then read samples. The plan’s lines are an incomplete fragment, saved as <code dir="auto">scripts/binaural-recorder/m3-i2s-fragment.txt</code>, not as a sketch you can upload.</p>
+<p><strong>Pass:</strong> the sample count is about 47,991 per second. With the inputs unconnected, levels stay very low and steady. Write that number down as your noise reference. Touching the VINL pin with a finger raises only the left value (hum).</p>
+<p><strong>Fail:</strong> zero samples means check SCKI, the MD pins, and the BCK and LRCK wiring. Values that look shifted or like garbage: try <code dir="auto">setBitsPerSample(32)</code> with <code dir="auto">read32()</code> and shift right by 8. If that still fails, the plan’s fallback is the C SDK path named on the design page.</p>
+<p>The plan says the PCM1808 output becomes valid about 187 ms after the clock starts (8960/fs), so throw away the first 0.25 s.</p>
+<aside aria-label="Untested I²S slave firmware" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>Untested I²S slave firmware</p><div class="starlight-aside__content"><p>Arduino-Pico’s docs say slave input is supported. The plan has not seen that path tested with this PCM1808. Step 3 is that test. Do not treat the fragment as working firmware.</p></div></aside>
+<aside aria-label="Check the module with a meter" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>Check the module with a meter</p><div class="starlight-aside__content"><p>Confirm the Amazon module’s silkscreen against the pin table before you apply power. The plan did not verify this listing’s pinout.</p></div></aside>
+<div class="sl-heading-wrapper level-h3"><h3 id="4-preamp-and-mics-on-the-breadboard">4. Preamp and mics on the breadboard</h3><a class="sl-anchor-link" href="#4-preamp-and-mics-on-the-breadboard"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “4. Preamp and mics on the breadboard”</span></a></div>
+<p>Build both preamp channels, VREF, and the mic bias, using the <a href="./design-and-wiring/#preamp-parts">preamp table</a>. Solder 30 cm test leads to two mics. The wearable harness comes later.</p>
+<p><strong>Pass (meter, power on, before you connect the ADC):</strong> the bias node reads half of the A5V you just measured. On USB that is about 2.5 V, inside the plan’s 2.4–2.6 V window. Both op-amp outputs (pins 1 and 7) read the same voltage as the bias node. Each mic node reads about 3–3.7 V.</p>
+<p><strong>Pass (sound):</strong> a finger snap by the left mic shows a much bigger left level than right, and the reverse for the right mic. Flipping a gain switch raises that channel by about 15.6 dB (×6).</p>
+<p><strong>Fail:</strong> an op-amp output stuck near 0 V or 5 V usually means a wiring error or a backwards electrolytic capacitor. Power off and recheck.</p>
+<p>The plan’s level print is <code dir="auto">20·log10(peak / 8388608)</code> in dBFS. That line is a note, not a shipped sketch.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="5-record-wav-files-to-microsd">5. Record WAV files to microSD</h3><a class="sl-anchor-link" href="#5-record-wav-files-to-microsd"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “5. Record WAV files to microSD”</span></a></div>
+<p>Add the SD breakout. Start and stop with the button. Write a 44-byte WAV header (PCM, 2 channels, 24-bit, 47991 Hz) and then packed 3-byte samples.</p>
+<p><strong>Pass:</strong> a 10-minute recording opens in Audacity, plays at the correct speed, has no clicks or gaps, and is about 173 MB. The firmware reports 0 I²S overflows (<code dir="auto">i2s.getOverflow()</code>) and logs its longest SD write.</p>
+<p><strong>Fail:</strong> clicks or overflows. The plan says to enlarge the RAM buffer, write in 512-byte multiples, pre-allocate the file, or try a different card.</p>
+<aside aria-label="Compiles; untested on hardware" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>Compiles; untested on hardware</p><div class="starlight-aside__content"><p><code dir="auto">scripts/binaural-recorder/wav-recorder/wav-recorder.ino</code> is the recorder for this step. It compiled with arduino-cli 1.5.1 and Arduino-Pico 6.3.2. It has not been run on a Pico, an ADC, or a card. It does not start by itself: the GP15 button or serial <code dir="auto">r</code> starts it, and serial <code dir="auto">s</code> stops it. It does not format the card or overwrite an existing <code dir="auto">REC</code> file. The behavior notes are under <a href="#scripts">Scripts</a>.</p></div></aside>
+<div class="sl-heading-wrapper level-h3"><h3 id="6-battery-harness-and-wearing-it">6. Battery, harness, and wearing it</h3><a class="sl-anchor-link" href="#6-battery-harness-and-wearing-it"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “6. Battery, harness, and wearing it”</span></a></div>
+<p>Move the circuit to the Perma-Proto and solder it. Add the PowerBoost, the LiPo, the power switch, and the battery sense. Follow the <a href="./design-and-wiring/#power">power rule</a> before you connect the booster. Build the headband harness with strain relief and the furry windscreens. Placement is on the <a href="./design-and-wiring/#wearing-the-mics">design page</a>.</p>
+<p><strong>Pass:</strong> record 60 minutes on battery with 0 overflows. At HIGH gain in a quiet room, the spectrum (Audacity, Analyze, Plot Spectrum) shows no tall narrow tones from the booster. On headphones, a friend walking around you while talking sounds like they are in the right place, left and right and front and back. A firm tug on the cable at the ear does not move the mic or break audio. Write down how long a full battery lasts.</p>
+<p><strong>Fail:</strong> whine or hum. The plan says a bigger A5V capacitor, shorter ground wires, or moving the PowerBoost farther from the preamp.</p>
+<aside aria-label="Battery life is unknown" class="starlight-aside starlight-aside--note"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path d="M12 11a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0v-4a1 1 0 0 0-1-1Zm.38-3.92a1 1 0 0 0-.76 0 1 1 0 0 0-.33.21 1.15 1.15 0 0 0-.21.33 1 1 0 0 0 .21 1.09c.097.088.209.16.33.21A1 1 0 0 0 13 8a1.05 1.05 0 0 0-.29-.71 1 1 0 0 0-.33-.21ZM12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 18a8 8 0 1 1 0-16.001A8 8 0 0 1 12 20Z"/></svg>Battery life is unknown</p><div class="starlight-aside__content"><p>The plan did not estimate runtime. The WAV sketch compiles and has not been run, so Pico and SD current are still unknown. The ADC alone, from its datasheet as the plan quotes it, is 8.6 mA analog plus 5.9 mA digital, typical at 48 kHz. Measure the real runtime in this step. The plan says to read the divider on GP26, multiply by 2, and stop recording cleanly below about 3.4 V, before the PowerBoost’s low-battery point (3.2 V).</p></div></aside>
+<aside aria-label="Danger" class="starlight-aside starlight-aside--danger"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path d="M12 7a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V8a1 1 0 0 0-1-1Zm0 8a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm9.71-7.44-5.27-5.27a1.05 1.05 0 0 0-.71-.29H8.27a1.05 1.05 0 0 0-.71.29L2.29 7.56a1.05 1.05 0 0 0-.29.71v7.46c.004.265.107.518.29.71l5.27 5.27c.192.183.445.286.71.29h7.46a1.05 1.05 0 0 0 .71-.29l5.27-5.27a1.05 1.05 0 0 0 .29-.71V8.27a1.05 1.05 0 0 0-.29-.71ZM20 15.31 15.31 20H8.69L4 15.31V8.69L8.69 4h6.62L20 8.69v6.62Z"/></svg>Danger</p><div class="starlight-aside__content"><p>Step 6 is the first time a LiPo is in the circuit. The battery rules in the parts section apply before you plug it in.</p></div></aside>
+<aside aria-label="Soldering" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>Soldering</p><div class="starlight-aside__content"><p>The iron is about 300–350 °C. Use a stand, ventilate the fumes, wash your hands after handling solder, and wear eye protection when you clip leads. The mic capsule is heat-sensitive: the plan says to tin the wire and the pad first, then join them in about 2 seconds.</p></div></aside>
+<div class="sl-heading-wrapper level-h2"><h2 id="scripts">Scripts</h2><a class="sl-anchor-link" href="#scripts"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Scripts”</span></a></div>
+<p>These helpers keep steps 1–6 short. None of them upload, flash, or overwrite a board or a card. The manual fallback is the Arduino IDE, which is also what the plan tells you to use.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="scriptsbinaural-recordercheck-setupsh"><code dir="auto">scripts/binaural-recorder/check-setup.sh</code></h3><a class="sl-anchor-link" href="#scriptsbinaural-recordercheck-setupsh"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “scripts/binaural-recorder/check-setup.sh”</span></a></div>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Status</td>
+<td>Print-only. Run once on Linux with no Arduino tools installed. Not run against the Arduino IDE or a Pico. It does not install software or open a port</td>
+</tr>
+<tr>
+<td>OS</td>
+<td>The plan names none. The script is POSIX <code dir="auto">sh</code> and prints <code dir="auto">uname</code> for whatever machine you are on</td>
+</tr>
+<tr>
+<td>Tools</td>
+<td>Looks for <code dir="auto">arduino</code> and <code dir="auto">arduino-cli</code> on <code dir="auto">PATH</code> and prints a version only if <code dir="auto">arduino-cli</code> is present. The WAV sketch is pinned to arduino-cli 1.5.1 and Arduino-Pico 6.3.2. This script does not install or compile them</td>
+</tr>
+<tr>
+<td>Before it changes anything</td>
+<td>It changes nothing. It checks, prints, and exits</td>
+</tr>
+<tr>
+<td>Flash / overwrite</td>
+<td>There is no upload flag. Extra arguments are refused</td>
+</tr>
+<tr>
+<td>Manual fallback</td>
+<td>Install the Arduino IDE, add the board URL from the Arduino-Pico README, select “Raspberry Pi Pico”, and type or open the sketch yourself</td>
+</tr>
+</tbody>
+</table>
+<div class="sl-heading-wrapper level-h3"><h3 id="scriptsbinaural-recorderm2-adc-clockm2-adc-clockino"><code dir="auto">scripts/binaural-recorder/m2-adc-clock/m2-adc-clock.ino</code></h3><a class="sl-anchor-link" href="#scriptsbinaural-recorderm2-adc-clockm2-adc-clockino"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “scripts/binaural-recorder/m2-adc-clock/m2-adc-clock.ino”</span></a></div>
+<p>Untested. Copied from the plan. OS and Arduino-Pico version: not pinned. The file does not upload itself. Open it in the Arduino IDE and upload only when you mean to. Manual fallback: type the same sketch by hand.</p>
+<div class="expressive-code"><link rel="stylesheet" href="/hardware-project-ideas/_astro/ec.w36nc.css"><script type="module" src="/hardware-project-ideas/_astro/ec.0vx5m.js"></script><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="cpp"><code><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">#include</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#ECC48D;--1:#984E4D">hardware/clocks.h</span><span style="--0:#D9F5DD;--1:#111111">"</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">void</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">setup</span><span style="--0:#D6DEEB;--1:#403F53">() {</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#82AAFF;--1:#3B61B0">set_sys_clock_pll</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#F78C6C;--1:#AA0982">1548000000</span><span style="--0:#D6DEEB;--1:#403F53">, </span><span style="--0:#F78C6C;--1:#AA0982">7</span><span style="--0:#D6DEEB;--1:#403F53">, </span><span style="--0:#F78C6C;--1:#AA0982">2</span><span style="--0:#D6DEEB;--1:#403F53">);</span><span style="--0:#919F9F;--1:#5D6376">  // 12 MHz*129/7/2 = 110.571 MHz</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#82AAFF;--1:#3B61B0">clock_gpio_init</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#F78C6C;--1:#AA0982">21</span><span style="--0:#D6DEEB;--1:#403F53">, </span><span style="--0:#C5E478;--1:#3B61B0">CLOCKS_CLK_GPOUT0_CTRL_AUXSRC_VALUE_CLK_SYS</span><span style="--0:#D6DEEB;--1:#403F53">, </span><span style="--0:#F78C6C;--1:#AA0982">9</span><span style="--0:#D6DEEB;--1:#403F53">);</span><span style="--0:#919F9F;--1:#5D6376"> // 12.2857 MHz</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#82AAFF;--1:#3B61B0">hw_set_bits</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C792EA;--1:#8844AE">&amp;</span><span style="--0:#C5E478;--1:#3B61B0">clocks_hw</span><span style="--0:#D6DEEB;--1:#403F53">-&gt;</span><span style="--0:#7FDBCA;--1:#096E72">clk</span><span style="--0:#D6DEEB;--1:#403F53">[</span><span style="--0:#C5E478;--1:#3B61B0">clk_gpout0</span><span style="--0:#D6DEEB;--1:#403F53">].</span><span style="--0:#7FDBCA;--1:#096E72">ctrl</span><span style="--0:#D6DEEB;--1:#403F53">, </span><span style="--0:#C5E478;--1:#3B61B0">CLOCKS_CLK_GPOUT0_CTRL_DC50_BITS</span><span style="--0:#D6DEEB;--1:#403F53">);</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#C5E478;--1:#3B61B0">Serial</span><span style="--0:#D6DEEB;--1:#403F53">.</span><span style="--0:#82AAFF;--1:#3B61B0">begin</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#F78C6C;--1:#AA0982">115200</span><span style="--0:#D6DEEB;--1:#403F53">);</span></div></div><div class="ec-line"><div class="code"><span style="--0:#D6DEEB;--1:#403F53">}</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">void</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">loop</span><span style="--0:#D6DEEB;--1:#403F53">() {</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#C5E478;--1:#3B61B0">Serial</span><span style="--0:#D6DEEB;--1:#403F53">.</span><span style="--0:#82AAFF;--1:#3B61B0">println</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#82AAFF;--1:#3B61B0">clock_get_hz</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">clk_sys</span><span style="--0:#D6DEEB;--1:#403F53">));</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#82AAFF;--1:#3B61B0">delay</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#F78C6C;--1:#AA0982">1000</span><span style="--0:#D6DEEB;--1:#403F53">);</span></div></div><div class="ec-line"><div class="code"><span style="--0:#D6DEEB;--1:#403F53">}</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="#include &quot;hardware/clocks.h&quot;void setup() {  set_sys_clock_pll(1548000000, 7, 2);  // 12 MHz*129/7/2 = 110.571 MHz  clock_gpio_init(21, CLOCKS_CLK_GPOUT0_CTRL_AUXSRC_VALUE_CLK_SYS, 9); // 12.2857 MHz  hw_set_bits(&amp;clocks_hw->clk[clk_gpout0].ctrl, CLOCKS_CLK_GPOUT0_CTRL_DC50_BITS);  Serial.begin(115200);}void loop() {  Serial.println(clock_get_hz(clk_sys));  delay(1000);}"><div></div></button></div></figure></div>
+<aside aria-label="Caution" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>Caution</p><div class="starlight-aside__content"><p>Do not treat this sketch as working. The plan lists it as untested standard SDK calls inside Arduino-Pico. The WAV sketch below uses these same three clock lines.</p></div></aside>
+<div class="sl-heading-wrapper level-h3"><h3 id="scriptsbinaural-recorderwav-recorderwav-recorderino"><code dir="auto">scripts/binaural-recorder/wav-recorder/wav-recorder.ino</code></h3><a class="sl-anchor-link" href="#scriptsbinaural-recorderwav-recorderwav-recorderino"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “scripts/binaural-recorder/wav-recorder/wav-recorder.ino”</span></a></div>
+<p>Compiles; untested on hardware. It is the step 5 recorder: I²S slave input, 24-bit stereo, a 44-byte WAV header at 47,991 Hz, SDFS on the plan’s SPI pins, start and stop from the button or from serial.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Status</td>
+<td>Compiled on Linux with arduino-cli 1.5.1 and Arduino-Pico 6.3.2, board <code dir="auto">rp2040:rp2040:rpipico</code>. Not run on a Pico, a PCM1808, or a microSD card</td>
+</tr>
+<tr>
+<td>OS</td>
+<td>The plan names none. The compile was on Linux</td>
+</tr>
+<tr>
+<td>Tools</td>
+<td>arduino-cli 1.5.1. Core <code dir="auto">rp2040:rp2040@6.3.2</code>. I²S and SDFS come with that core. No extra libraries</td>
+</tr>
+<tr>
+<td>Before it changes anything</td>
+<td>On the Pico it waits. It mounts the card and creates a file only after GP15 is pressed or serial <code dir="auto">r</code> arrives. <code dir="auto">setAutoFormat(false)</code> is set, and <code dir="auto">format()</code> is never called</td>
+</tr>
+<tr>
+<td>Flash / overwrite</td>
+<td>The file does not upload itself. A new recording uses the next free <code dir="auto">REC0001.WAV</code>–<code dir="auto">REC9999.WAV</code> name. Existing files are left alone</td>
+</tr>
+<tr>
+<td>Manual fallback</td>
+<td>In the Arduino IDE, install Arduino-Pico 6.3.2 from the core README’s board URL, open this sketch, and upload it only when you mean to</td>
+</tr>
+</tbody>
+</table>
+<aside aria-label="Caution" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>Caution</p><div class="starlight-aside__content"><p>A clean compile is not a working recorder. Step 5’s pass line (10 minutes in Audacity, no gaps, 0 overflows) has not been done.</p></div></aside>
+<div class="sl-heading-wrapper level-h3"><h3 id="scriptsbinaural-recorderm3-i2s-fragmenttxt"><code dir="auto">scripts/binaural-recorder/m3-i2s-fragment.txt</code></h3><a class="sl-anchor-link" href="#scriptsbinaural-recorderm3-i2s-fragmenttxt"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “scripts/binaural-recorder/m3-i2s-fragment.txt”</span></a></div>
+<p>Untested and incomplete. The plan only wrote these lines. The file is text, not an <code dir="auto">.ino</code>, so the Arduino IDE will not treat the folder as a sketch and upload a stub over a board. Manual fallback: after the clock code is running, add these calls yourself.</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="cpp"><code><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">#include</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#D9F5DD;--1:#111111">&lt;</span><span style="--0:#ECC48D;--1:#984E4D">I2S.h</span><span style="--0:#D9F5DD;--1:#111111">&gt;</span></div></div><div class="ec-line"><div class="code"><span style="--0:#D6DEEB;--1:#403F53">I2S </span><span style="--0:#82AAFF;--1:#3B61B0">i2s</span><span style="--0:#D6DEEB;--1:#403F53">(INPUT);</span></div></div><div class="ec-line"><div class="code"><span style="--0:#919F9F;--1:#5D6376">// in setup(), after the M2 clock code:</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C5E478;--1:#3B61B0">i2s</span><span style="--0:#D6DEEB;--1:#403F53">.</span><span style="--0:#82AAFF;--1:#3B61B0">setSlave</span><span style="--0:#D6DEEB;--1:#403F53">(); </span><span style="--0:#C5E478;--1:#3B61B0">i2s</span><span style="--0:#D6DEEB;--1:#403F53">.</span><span style="--0:#82AAFF;--1:#3B61B0">setDATA</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#F78C6C;--1:#AA0982">10</span><span style="--0:#D6DEEB;--1:#403F53">);</span><span style="--0:#919F9F;--1:#5D6376"> // GP10=DIN, GP11=BCLK, GP12=LRCLK</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C5E478;--1:#3B61B0">i2s</span><span style="--0:#D6DEEB;--1:#403F53">.</span><span style="--0:#82AAFF;--1:#3B61B0">setBitsPerSample</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#F78C6C;--1:#AA0982">24</span><span style="--0:#D6DEEB;--1:#403F53">); </span><span style="--0:#C5E478;--1:#3B61B0">i2s</span><span style="--0:#D6DEEB;--1:#403F53">.</span><span style="--0:#82AAFF;--1:#3B61B0">setBuffers</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#F78C6C;--1:#AA0982">16</span><span style="--0:#D6DEEB;--1:#403F53">, </span><span style="--0:#F78C6C;--1:#AA0982">256</span><span style="--0:#D6DEEB;--1:#403F53">);</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C5E478;--1:#3B61B0">i2s</span><span style="--0:#D6DEEB;--1:#403F53">.</span><span style="--0:#82AAFF;--1:#3B61B0">begin</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#F78C6C;--1:#AA0982">47991</span><span style="--0:#D6DEEB;--1:#403F53">);</span></div></div><div class="ec-line"><div class="code"><span style="--0:#919F9F;--1:#5D6376">// in loop(): int32_t l, r; i2s.read24(&amp;l, &amp;r); -&gt; track peaks, count samples/second</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="#include <I2S.h>I2S i2s(INPUT);// in setup(), after the M2 clock code:i2s.setSlave(); i2s.setDATA(10); // GP10=DIN, GP11=BCLK, GP12=LRCLKi2s.setBitsPerSample(24); i2s.setBuffers(16, 256);i2s.begin(47991);// in loop(): int32_t l, r; i2s.read24(&amp;l, &amp;r); -> track peaks, count samples/second"><div></div></button></div></figure></div>
+<p>If slave input never behaves with this chip, the plan’s fallback is the Pico C SDK, using the archived <a href="https://github.com/malacalypse/rp2040_i2s_example">malacalypse/rp2040_i2s_example</a> (I²S slave input) and <a href="https://github.com/carlk3/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico">carlk3’s FatFS library</a>. That fallback is also untested here.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="open-questions-and-risks">Open questions and risks</h2><a class="sl-anchor-link" href="#open-questions-and-risks"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Open questions and risks”</span></a></div>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Status in the plan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mic max SPL, 110 dB</td>
+<td>May distort at the stage. Stand back, test first, and consider a higher-SPL capsule in a later version</td>
+</tr>
+<tr>
+<td>47,991 Hz sample rate</td>
+<td>Fine for listening, and for ML if you resample to 48 kHz or 16 kHz in software. Exact 48 kHz would need a 12.288 MHz oscillator on SCKI. That part was not priced</td>
+</tr>
+<tr>
+<td>Arduino-Pico I²S slave with the PCM1808</td>
+<td>The 6.3.2 core documents slave input, and the WAV sketch compiles against it. Not run with this chip. Step 3 is the test. The C SDK example is the fallback</td>
+</tr>
+<tr>
+<td>PCM1808 module details</td>
+<td>Pin labels, onboard input caps, MD/FMT jumpers, and the 3.3 V pin are unverified for this Amazon module. Check with a meter and the silkscreen. Trust the TI datasheet’s 99 dB typical, not the listing’s “105 dB”</td>
+</tr>
+<tr>
+<td>Battery runtime</td>
+<td>Not estimated. Measure it in step 6</td>
+</tr>
+<tr>
+<td>Prices</td>
+<td>The Oct 30, 2026 list still stands, except the Pinecil, which was checked again on Nov 10, 2026 at $68.50. Shipping and tax are not included. Amazon third-party prices change often</td>
+</tr>
+<tr>
+<td>Windscreen fit</td>
+<td>0.4 inch muffs on a 9.7 mm capsule plus heat-shrink: unverified</td>
+</tr>
+<tr>
+<td>MAX9814 datasheet</td>
+<td>The plan could not fetch it (analog.com timed out). That part is not used. The comparison is on the design page, with that limit</td>
+</tr>
+<tr>
+<td>WAV sketch on real hardware</td>
+<td>The sketch compiles. Sample count, overflow count, header updates, and SD pauses have not been measured</td>
+</tr>
+<tr>
+<td><code dir="auto">millis()</code> after the clock change</td>
+<td>File length uses the sample counter, not <code dir="auto">millis()</code>. Button debounce still uses <code dir="auto">millis()</code>. That timer was not checked after <code dir="auto">set_sys_clock_pll</code></td>
+</tr>
+</tbody>
+</table>
+<div class="sl-heading-wrapper level-h2"><h2 id="next-tiny-step">Next tiny step</h2><a class="sl-anchor-link" href="#next-tiny-step"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Next tiny step”</span></a></div>
+<p>Do step 1 only. Install the Arduino IDE, point it at the Arduino-Pico core using the URL in that project’s README, select “Raspberry Pi Pico”, and get a one-second blink plus <code dir="auto">hello</code> on the Serial Monitor. No soldering, and no parts order, for that step.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="test-log">Test log</h2><a class="sl-anchor-link" href="#test-log"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Test log”</span></a></div>
+<p>No hardware tests yet. Nothing has been assembled or uploaded.</p>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>What you tried</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nov 10, 2026</td>
+<td><code dir="auto">arduino-cli</code> 1.5.1 compiled <code dir="auto">wav-recorder.ino</code> for <code dir="auto">rp2040:rp2040:rpipico</code> with Arduino-Pico 6.3.2, on Linux</td>
+<td>Compiles. Not run on hardware</td>
+</tr>
+</tbody>
+</table>
+</div><footer class="sl-flex astro-ddtxxk7k"><div class="meta sl-flex astro-ddtxxk7k"></div><div class="pagination-links print:hidden astro-b5raizh3" dir="ltr"><a href="/hardware-project-ideas/projects/template/" rel="prev" class="astro-b5raizh3"><svg aria-hidden="true" class="astro-b5raizh3 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17 11H9.41l3.3-3.29a1.004 1.004 0 1 0-1.42-1.42l-5 5a1 1 0 0 0-.21.33 1 1 0 0 0 0 .76 1 1 0 0 0 .21.33l5 5a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095L9.41 13H17a1 1 0 0 0 0-2Z"/></svg><span class="astro-b5raizh3">Previous<br class="astro-b5raizh3"><span class="link-title astro-b5raizh3">Project template</span></span></a><a href="/hardware-project-ideas/projects/binaural-recorder/design-and-wiring/" rel="next" class="astro-b5raizh3"><svg aria-hidden="true" class="astro-b5raizh3 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg><span class="astro-b5raizh3">Next<br class="astro-b5raizh3"><span class="link-title astro-b5raizh3">Design and wiring</span></span></a></div></footer></div></div></main></div></div></div></div></body></html>
