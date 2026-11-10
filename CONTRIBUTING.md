@@ -32,4 +32,4 @@ npm run dev
 npm run build
 ```
 
-`npm run dev` previews the site on your machine. `npm run build` writes the static site into `docs/`, which is the folder GitHub Pages publishes from this repository. Commit that folder with the content change.
+`npm run dev` previews the site on your machine. `npm run build` checks that the static site builds.
