@@ -37,6 +37,7 @@ export default defineConfig({
 						},
 						{ slug: 'projects/social-battery-patch' },
 						{ slug: 'projects/generative-mini-synth' },
+						{ slug: 'projects/hologram-face-robot' },
 					],
 				},
 			],
